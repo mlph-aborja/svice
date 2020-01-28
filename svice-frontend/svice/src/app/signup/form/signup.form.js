@@ -9,36 +9,51 @@ import {
   CardTitle,
   Form,
   FormGroup,
+  FormText,
   Input,
 } from "reactstrap";
 
 
 export class SignUpForm extends React.Component {
 
-
   constructor (props) {
     super(props);
-    this.state = {}
+    this.state = {
+      ...props
+    }
   }
 
-  onBlur = (field, value) => {
-
-    var error = false;
+  validate = (field, value) => {
+    var style = '';
     if (field.required) {
-
+      if (value.trim() === "") {
+        style = 'has-danger';
+      } else {
+        // TODO: check others eg email, password, password_confirmation
+        style = 'has-success';
+        const errors = this.state.errors;
+        errors[field.name] = [];
+        this.setState({
+          errors: errors
+        })
+      }
+    } else {
+      // TODO:
     }
-
     this.setState({
-      [field.name]: true
+      [field.name]: style
     })
+  }
 
-
-
+  static getDerivedStateFromProps(nextProps, prevState) {
+   return {
+    errors: nextProps.errors,
+   };
   }
 
   render () {
     return (
-      <Card className="card-signup" >
+      <Card className="card-signup">
         <Form action="" className="form" method="">
           <CardHeader className="text-center">
             <CardTitle className="title-up" tag="h3">
@@ -47,21 +62,24 @@ export class SignUpForm extends React.Component {
           </CardHeader>
           <CardBody>
             { this.props.fields.map((field, index) => {
-              return <FormGroup key={index} className={"no-border " + (this.state[field.name] ? 'has-danger' : '')}>
+              return <FormGroup key={index} className={"no-border " + (this.state[field.name])}>
                 <Input
                   name={field.name}
                   placeholder={field.placeholder}
                   type={field.type}
                   onChange={event => this.props.onInputChange(field.name, event.target.value)}
-                  onBlur={event => this.onBlur(field, event.target.value)}
+                  onBlur={event => this.validate(field, event.target.value)}
                 ></Input>
+                 <FormText className="text-muted text-center" color="danger">
+                  {this.state.errors[field.name]}
+                </FormText>
               </FormGroup>
             })}
           </CardBody>
           <CardFooter className="text-center">
             <Button
               className="btn-primary btn-round"
-              color="info"
+              href="#"
               onClick={e => this.props.onSubmit(e) }
               size="lg">
               SUBMIT

@@ -16,21 +16,40 @@ export class SignUpPage extends React.Component {
     super(props);
     this.formData = {};
     this.state = {
-      loading: false,
+      ...props,
+      errors: [],
       success: false,
-      errors: {}
+      alert: false
     }
   }
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
+    this.setState({ 
+      loading: true 
+    });
     Register(this.formData)
-      .then(data => 
-        this.setState({ 
-          success: true,
-          loading: false 
-      }));
+      .then(data => {
+        if (data.errors) {
+          this.setState({
+              alert: true,
+              success: false,
+              loading: false,
+              message: data.message,
+              errors: data.errors 
+          })
+        } else {
+          this.setState({
+              alert: true,
+              success: true,
+              loading: false,
+              message: "Success Sign Up",
+              errors: []
+          })
+          // What to do with the user object?
+          // const user = data.user;
+        }
+      })
   }
 
   onInputChange = (name, value) => {
@@ -48,8 +67,10 @@ export class SignUpPage extends React.Component {
     return (
         <div className="section section-signup signup-background">
           <Container>
-            <UncontrolledAlert color="info" isOpen={this.state.success}>
-              <b>Success!</b> You have created an account.
+            <UncontrolledAlert 
+              color={this.state.success ? 'info': 'danger'} 
+              isOpen={this.state.alert}>
+                {this.state.message}
             </UncontrolledAlert>
             <Row>
               <SignUpForm
