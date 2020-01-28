@@ -2,6 +2,7 @@ import React from "react";
 // reactstrap components
 import {
   Container,
+  UncontrolledAlert,
   Row
 } from "reactstrap";
 
@@ -14,19 +15,21 @@ export class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.formData = {};
-
     this.state = {
-      isLoading: false
+      loading: false,
+      success: false,
+      errors: {}
     }
   }
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.setState({ isLoading: true });
+    this.setState({ loading: true });
     Register(this.formData)
       .then(data => 
         this.setState({ 
-          isLoading: false 
+          success: true,
+          loading: false 
       }));
   }
 
@@ -35,27 +38,29 @@ export class SignUpPage extends React.Component {
   }
 
   render () {
-
     const fields = [
-      {name: "first_name", type: "text", placeholder: "First Name", icon: "users_circle-08"},
-      {name: "last_name", type: "text", placeholder: "Last Name", icon: "text_caps-small"},
-      {name: "email", type: "email", placeholder: "Email", icon: "ui-1_email-85"},
-      {name: "password", type: "text", placeholder: "Password", icon: "ui-1_email-85"},
-      {name: "password_confirmation", type: "text", placeholder: "Password Confirmation", icon: "ui-1_email-85"}
+      {required: true, name: "first_name", type: "text", placeholder: "First Name"},
+      {required: true, name: "last_name", type: "text", placeholder: "Last Name"},
+      {required: true, name: "email", type: "email", placeholder: "Email"},
+      {required: true, name: "password", type: "password", placeholder: "Password"},
+      {required: true, name: "password_confirmation", type: "password", placeholder: "Password Confirmation"}
     ]
-
     return (
         <div className="section section-signup signup-background">
           <Container>
+            <UncontrolledAlert color="info" isOpen={this.state.success}>
+              <b>Success!</b> You have created an account.
+            </UncontrolledAlert>
             <Row>
-              <SignUpForm 
+              <SignUpForm
                 fields={fields}
-                title={process.env.REACT_APP_TITLE} 
+                errors={this.state.errors}
+                title={process.env.REACT_APP_TITLE}
                 onSubmit={this.onSubmit}
                 onInputChange={this.onInputChange} />
             </Row>
           </Container>
-        </div>    
+        </div>
     );
   }
 }

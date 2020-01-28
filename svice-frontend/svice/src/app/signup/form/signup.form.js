@@ -8,49 +8,67 @@ import {
   CardFooter,
   CardTitle,
   Form,
+  FormGroup,
   Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup
 } from "reactstrap";
 
-export function SignUpForm (props) {
-  return (
-    <Card className="card-signup" >
-      <Form action="" className="form" method="">
-        <CardHeader className="text-center">
-          <CardTitle className="title-up" tag="h3">
-           {props.title} Sign Up 
-          </CardTitle>
-        </CardHeader>
-        <CardBody>
-          { props.fields.map((field, index) => {
-            return <InputGroup key={index} className={ "no-border" }>
-              <InputGroupAddon addonType="prepend">
-                  <InputGroupText>
-                    <i className={[field.icon, "now-ui-icons"].join(' ')}></i>
-                  </InputGroupText> 
-                </InputGroupAddon>
+
+export class SignUpForm extends React.Component {
+
+
+  constructor (props) {
+    super(props);
+    this.state = {}
+  }
+
+  onBlur = (field, value) => {
+
+    var error = false;
+    if (field.required) {
+
+    }
+
+    this.setState({
+      [field.name]: true
+    })
+
+
+
+  }
+
+  render () {
+    return (
+      <Card className="card-signup" >
+        <Form action="" className="form" method="">
+          <CardHeader className="text-center">
+            <CardTitle className="title-up" tag="h3">
+             {this.props.title} Sign Up
+            </CardTitle>
+          </CardHeader>
+          <CardBody>
+            { this.props.fields.map((field, index) => {
+              return <FormGroup key={index} className={"no-border " + (this.state[field.name] ? 'has-danger' : '')}>
                 <Input
-                  placeholder={field.placeholder}
                   name={field.name}
+                  placeholder={field.placeholder}
                   type={field.type}
-                  onChange={event => props.onInputChange(field.name, event.target.value)}
+                  onChange={event => this.props.onInputChange(field.name, event.target.value)}
+                  onBlur={event => this.onBlur(field, event.target.value)}
                 ></Input>
-             </InputGroup>
-          })}
-        </CardBody>
-        <CardFooter className="text-center">
-          <Button
-            className="btn-primary btn-round"
-            color="info"
-            onClick={e => props.onSubmit(e) }
-            size="lg"
-          >
-            SUBMIT
-          </Button>
-        </CardFooter>
-      </Form>      
-    </Card>
-  );
+              </FormGroup>
+            })}
+          </CardBody>
+          <CardFooter className="text-center">
+            <Button
+              className="btn-primary btn-round"
+              color="info"
+              onClick={e => this.props.onSubmit(e) }
+              size="lg">
+              SUBMIT
+            </Button>
+          </CardFooter>
+        </Form>
+      </Card>
+    );
+  }
 }
