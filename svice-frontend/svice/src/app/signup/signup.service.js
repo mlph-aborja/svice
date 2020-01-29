@@ -1,4 +1,6 @@
 
+/* Includes all api service for signup */
+
 export function Register (params) : Promise<Response> {
   const url = process.env.REACT_APP_API_ENDPOINT + "/register";
   return fetch(url, {
