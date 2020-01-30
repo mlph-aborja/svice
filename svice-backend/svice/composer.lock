@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e9454075a6f07e7c2040b9bd1ca944b",
+    "content-hash": "a43b837eb4732c49b86ef15ea0b2a9c5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1124,16 +1124,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v8.3.0",
+            "version": "v8.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "e3d3c867d696c95e1cda7817533924db0f988007"
+                "reference": "98456cb16efd2ef7b41797e0a8559c9d8b4112f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/e3d3c867d696c95e1cda7817533924db0f988007",
-                "reference": "e3d3c867d696c95e1cda7817533924db0f988007",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/98456cb16efd2ef7b41797e0a8559c9d8b4112f8",
+                "reference": "98456cb16efd2ef7b41797e0a8559c9d8b4112f8",
                 "shasum": ""
             },
             "require": {
@@ -1192,7 +1192,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2020-01-28T21:17:01+00:00"
+            "time": "2020-01-29T13:25:24+00:00"
         },
         {
             "name": "laravel/tinker",

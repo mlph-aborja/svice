@@ -30,13 +30,14 @@ export class LoginPage extends React.Component {
     });
     Login(this.formData)
       .then(data => {
-        if (data.errors) {
+        if (data.message) {
+          console.log(data)
           this.setState({
               alert: true,
               success: false,
               loading: false,
               message: data.message,
-              errors: data.errors 
+              errors: data.errors || {}
           })
         } else {
           this.setState({
@@ -50,7 +51,6 @@ export class LoginPage extends React.Component {
           // const user = data.user;
         }
       })
-    this.props.history.push('/signup')
 
   }
 
