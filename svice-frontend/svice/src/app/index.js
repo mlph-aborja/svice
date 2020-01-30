@@ -8,13 +8,15 @@ import "../assets/demo/demo.css";
 import "../assets/demo/nucleo-icons-page-styles.css";
 
 import { SignUpPage } from "./signup";
+import { LoginPage } from "./login";
 
 export default function App (props) {
 	return (
 	  <BrowserRouter>
 	    <Switch>
 	      <Switch>
-	        <Route path="/signup" render={props => <SignUpPage {...props} />} />
+			<Route path="/signup" render={props => <SignUpPage {...props} />} />
+			<Route path="/login" render={props => <LoginPage {...props} />} />
 	        <Redirect from="/" to="/signup" />
 	      </Switch>
 	    </Switch>
