@@ -1,16 +1,11 @@
+import Axios from "axios";
 
 /* Includes all api service for signup */
 
-export function Register (params) : Promise<Response> {
+export function Register(params) {
   const url = process.env.REACT_APP_API_ENDPOINT + "/register";
-  return fetch(url, {
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(params)
-  }).then(function(response) {
-    return response.json();
-  })
+
+  return Axios.post(url, params)
+    .then(response => response.data)
+    .catch(error => error.response.data);
 }

@@ -31,7 +31,6 @@ export class LoginPage extends React.Component {
     Login(this.formData)
       .then(data => {
         if (data.message) {
-          console.log(data)
           this.setState({
               alert: true,
               success: false,
