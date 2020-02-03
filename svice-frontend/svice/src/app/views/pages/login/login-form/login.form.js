@@ -63,7 +63,7 @@ export class LoginForm extends React.Component {
               <i className="now-ui-icons ui-2_settings-90 mr-2"></i>
               SVICE
             </h1>
-            <h4>Sign In</h4>
+            <h3>Sign In</h3>
           </CardHeader>
           <CardBody>
             {this.props.fields.map((field, index) => {

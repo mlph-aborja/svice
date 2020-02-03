@@ -17,6 +17,10 @@ export class SignUpPage extends React.Component {
       alert: false
     };
 
+    this.onInitPage();
+  }
+
+  onInitPage() {
     document.body.classList.add('login-page');
     document.body.classList.add('sidebar-collapse');
     document.documentElement.classList.remove('nav-open');
@@ -46,8 +50,8 @@ export class SignUpPage extends React.Component {
           message: 'Success Sign Up',
           errors: []
         });
-        // What to do with the user object?
-        // const user = data.user;
+
+        this.props.history.push('/login?success=true');
       }
     });
   };
@@ -104,7 +108,7 @@ export class SignUpPage extends React.Component {
             }}
           ></div>
           <Alert
-            color={this.state.success ? 'info' : 'danger'}
+            color={this.state.success ? 'success' : 'danger'}
             isOpen={this.state.alert}
           >
             {this.state.message}
