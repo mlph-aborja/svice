@@ -7,8 +7,8 @@ import '../assets/scss/now-ui-kit.scss';
 import '../assets/demo/demo.css';
 import '../assets/demo/nucleo-icons-page-styles.css';
 
-import { SignUpPage } from './pages/signup';
-import { LoginPage } from './pages/login';
+import { SignUpPage } from './views/pages/signup';
+import { LoginPage } from './views/pages/login';
 
 export default function App(props) {
   return (
