@@ -2,7 +2,7 @@ import React from 'react';
 // reactstrap components
 import { Container, Col, Alert } from 'reactstrap';
 
-import { SignUpForm } from './form';
+import { SignUpForm } from './signup-form';
 import { Register } from './signup.service';
 import './signup.css';
 

@@ -62,6 +62,7 @@ export class SignUpForm extends React.Component {
               <i className="now-ui-icons ui-2_settings-90 mr-2"></i>
               SVICE
             </h1>
+            <h4>Registration</h4>
           </CardHeader>
           <CardBody>
             {this.props.fields.map((field, index) => {
