@@ -2,14 +2,14 @@ import React from 'react';
 import queryString from 'query-string';
 
 // reactstrap components
-import { Container, Col, Alert, UncontrolledAlert } from 'reactstrap';
+import { Container, Col, Alert } from 'reactstrap';
 
 // core components
-import { LoginForm } from './login-form';
+import { LoginForm } from './form';
 import { Login } from './login.service';
 import './login.css';
 
-export class LoginPage extends React.Component {
+export class AdminLoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.formData = {};
@@ -21,7 +21,6 @@ export class LoginPage extends React.Component {
     };
 
     this.onInitPage();
-    this.onSuccessRegister();
   }
 
   onInitPage() {
@@ -30,16 +29,6 @@ export class LoginPage extends React.Component {
     document.documentElement.classList.remove('nav-open');
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-  }
-
-  onSuccessRegister() {
-    const value = queryString.parse(this.props.location.search);
-    const loginSuccess = value.success;
-    if (loginSuccess) {
-      this.state.success = true;
-      this.state.alert = true;
-      this.state.message = 'You can now Sign in your account.';
-    }
   }
 
   onSubmit = event => {
