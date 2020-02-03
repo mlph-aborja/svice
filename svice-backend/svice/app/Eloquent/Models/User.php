@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Eloquent;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,9 +20,10 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'middle_name',
-        'last_name', 
-        'email', 
+        'last_name',
+        'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -41,4 +43,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @return HasOne
+     */
+    public function role(): HasOne
+    {
+        return $this->hasOne('App\Eloquent\Models\Role', 'id', 'role_id');
+    }
 }
