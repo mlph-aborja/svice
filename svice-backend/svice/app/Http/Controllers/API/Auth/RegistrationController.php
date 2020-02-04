@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\User;
+use App\Contracts\Repositories\RoleRepositoryInterface;
+use App\Contracts\Repositories\UserRepositoryInterface;
+use App\Eloquent\Models\User;
+use App\Eloquent\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -21,29 +24,69 @@ class RegistrationController extends Controller
     |
     */
 
+    protected $userRepository;
+
+    protected $roleRepository;
+
+    public function __construct( UserRepositoryInterface $userRepository,
+                                 RoleRepositoryInterface $roleRepository )
+    {
+        $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
+    }
+
     /**
-     * Validate user details upon registration and save to database
-     * 
      * @param Request $request
      * @return Response
      */
-    public function register(Request $request) : Response 
+    public function registerAdmin (Request $request): Response
     {
-        // Validate user's credentials
-        $validatedData = $request->validate([
+        return $this->register($request, $this->roleRepository->adminRole());
+    }
+
+    /**
+     * Registers customer
+     * @param Request $request
+     * @return Response
+     */
+    public function registerCustomer (Request $request): Response
+    {
+        return $this->register($request, $this->roleRepository->customerRole());
+    }
+
+    /**
+     * Registers service provider
+     * @param Request $request
+     * @return Response
+     */
+    public function registerServiceProvider (Request $request): Response
+    {
+        return $this->register($request, $this->roleRepository->serviceProviderRole());
+    }
+
+    /**
+     * Validate user details upon registration and save to database
+     *
+     * @param Request $request
+     * @param Role $role
+     * @return Response
+     */
+    protected function register(Request $request, Role $role) : Response
+    {
+        $data = $this->validateParameters($request);
+        $data['password'] = Hash::make($request->password);
+        $data['role_id'] = $role->id;
+        $user = $this->userRepository->create($data);
+        return response(['user' => $user]); // TODO: Make a template for response format
+    }
+
+    protected function validateParameters (Request $request) {
+        return $request->validate([
             'first_name' => 'required',
             'middle_name' => '',
-            'last_name' => 'required', 
+            'last_name' => 'required',
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed'
         ]);
-
-        // Hash user's password
-        $validatedData['password'] = Hash::make($request->password);
-
-        // Save to database
-        $user = User::create($validatedData);
-
-        return response(['user' => $user]);
     }
 }

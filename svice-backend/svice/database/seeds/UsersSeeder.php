@@ -25,7 +25,6 @@ class UsersSeeder extends Seeder
     public function run()
     {
         $this->createAdminUser();
-        $this->createCustomerUser();
     }
 
     protected function createAdminUser ()

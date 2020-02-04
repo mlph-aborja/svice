@@ -22,5 +22,9 @@ class RolesSeeder extends Seeder
         $this->roleRepository->create([
             "name" => Role::ROLE_NAME_ADMIN
         ]);
+
+        $this->roleRepository->create([
+            "name" => Role::ROLE_NAME_SERVICE_PROVIDER
+        ]);
     }
 }

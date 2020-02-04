@@ -12,6 +12,7 @@ class Role extends Model implements Auditable
 
     const ROLE_NAME_CUSTOMER = "CUSTOMER";
     const ROLE_NAME_ADMIN = "ADMIN";
+    const ROLE_NAME_SERVICE_PROVIDER = "SERVICE PROVIDER";
 
     protected $fillable = [
         'name'

@@ -23,4 +23,9 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
     {
         return Role::where('name', Role::ROLE_NAME_CUSTOMER)->first();
     }
+
+    public function serviceProviderRole(): Role
+    {
+        return Role::where('name', Role::ROLE_NAME_SERVICE_PROVIDER)->first();
+    }
 }
