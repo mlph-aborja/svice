@@ -1,11 +1,11 @@
 # Svice
 
 ## Requirements
-    - PHP
-    - Composer
-    - Laravel
-    - Node JS
-    - MySQL
+- PHP
+- Composer
+- Laravel
+- Node JS
+- MySQL
 
 ## Svice Backend Setup
 
