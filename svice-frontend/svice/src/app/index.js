@@ -11,12 +11,12 @@ import '../../src/index.css';
 import CustomerSignUpPage from './views/pages/customer/signup/signup.page';
 import CustomerLoginPage from './views/pages/customer/login/login.page';
 import AdminLoginPage from './views/pages/admin/login/login.page';
-import Alert from './components/alert';
+import AlertBox from './components/alert-box';
 
 export default function App(props) {
 	return (
 		<BrowserRouter>
-			<Alert />
+			<AlertBox />
 			<Switch>
 				<Switch>
 					<Route

@@ -1,4 +1,4 @@
-import { SHOW_ALERT } from '../actions/types';
+import { SHOW_ALERT_BOX } from '../actions/types';
 
 const initialState = {
 	show: false,
@@ -8,7 +8,7 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-		case SHOW_ALERT:
+		case SHOW_ALERT_BOX:
 			const payload = action.payload;
 			return {
 				...state,

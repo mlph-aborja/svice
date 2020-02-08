@@ -9,7 +9,7 @@ import { Login } from './login.service';
 import './login.css';
 
 import AuthUtil from '../../../../util/auth.util';
-import { showAlert } from '../../../../../actions/alert.action';
+import { showAlert } from '../../../../../actions/alert-box.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -67,6 +67,10 @@ class AdminLoginPage extends React.Component {
 		this.formData[name] = value;
 	};
 
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
+
 	render() {
 		const fields = [
 			{
@@ -122,9 +126,9 @@ AdminLoginPage.protoTypes = {
 };
 
 const mapStateToProps = state => ({
-	alert: state.alert.show,
-	succcess: state.alert.succcess,
-	message: state.alert.message
+	alert: state.alertBox.show,
+	succcess: state.alertBox.succcess,
+	message: state.alertBox.message
 });
 
 export default connect(mapStateToProps, { showAlert })(AdminLoginPage);

@@ -1,8 +1,8 @@
-import { SHOW_ALERT } from './types';
+import { SHOW_ALERT_BOX } from './types';
 
 export const showAlert = (show, success, message) => dispatch => {
 	dispatch({
-		type: SHOW_ALERT,
+		type: SHOW_ALERT_BOX,
 		payload: {
 			show: show,
 			success: success,

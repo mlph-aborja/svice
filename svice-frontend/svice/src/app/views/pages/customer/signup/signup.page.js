@@ -5,7 +5,7 @@ import { Container, Col } from 'reactstrap';
 import { SignUpForm } from './form';
 import { Register } from './signup.service';
 import './signup.css';
-import { showAlert } from '../../../../../actions/alert.action';
+import { showAlert } from '../../../../../actions/alert-box.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -48,9 +48,8 @@ class CustomerSignUpPage extends React.Component {
 					loading: false,
 					errors: []
 				});
-
-				this.props.showAlert(true, true, 'You can now Sign in your account');
 				this.props.history.push('/login');
+				this.props.showAlert(true, true, 'You can now Sign in your account');
 			}
 		});
 	};
@@ -58,6 +57,10 @@ class CustomerSignUpPage extends React.Component {
 	onInputChange = (name, value) => {
 		this.formData[name] = value;
 	};
+
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
 
 	render() {
 		const fields = [
@@ -130,13 +133,14 @@ CustomerSignUpPage.protoTypes = {
 	showAlert: PropTypes.func.isRequired,
 	alert: PropTypes.bool.isRequired,
 	succcess: PropTypes.bool.isRequired,
-	message: PropTypes.string.isRequired
+	message: PropTypes.string.isRequired,
+	location: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-	alert: state.alert.show,
-	succcess: state.alert.succcess,
-	message: state.alert.message
+	alert: state.alertBox.show,
+	succcess: state.alertBox.succcess,
+	message: state.alertBox.message
 });
 
 export default connect(mapStateToProps, { showAlert })(CustomerSignUpPage);

@@ -1,1 +1,1 @@
-export const SHOW_ALERT = 'SHOW_ALERT';
+export const SHOW_ALERT_BOX = 'SHOW_ALERT_BOX';
