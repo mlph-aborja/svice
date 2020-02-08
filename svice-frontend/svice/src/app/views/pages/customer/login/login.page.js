@@ -23,7 +23,6 @@ export class CustomerLoginPage extends React.Component {
 		};
 
 		this.onInitPage();
-		this.onSuccessRegister();
 	}
 
 	onInitPage() {
@@ -38,9 +37,11 @@ export class CustomerLoginPage extends React.Component {
 		const value = queryString.parse(this.props.location.search);
 		const loginSuccess = value.success;
 		if (loginSuccess) {
-			this.state.success = true;
-			this.state.alert = true;
-			this.state.message = 'You can now Sign in your account.';
+			this.setState({
+				success: true,
+				alert: true,
+				message: 'You can now Sign in your account.'
+			});
 		}
 	}
 
@@ -76,6 +77,10 @@ export class CustomerLoginPage extends React.Component {
 	onInputChange = (name, value) => {
 		this.formData[name] = value;
 	};
+
+	componentDidMount() {
+		this.onSuccessRegister();
+	}
 
 	render() {
 		const fields = [
