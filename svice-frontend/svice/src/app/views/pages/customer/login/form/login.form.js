@@ -103,7 +103,7 @@ export class LoginForm extends React.Component {
 											onBlur={event => this.validate(field, event.target.value)}
 										></Input>
 									</InputGroup>
-									<FormText className='text-center text-danger'>
+									<FormText className='text-center text-danger error-text'>
 										{this.state.errors[field.name]}
 									</FormText>
 								</FormGroup>
