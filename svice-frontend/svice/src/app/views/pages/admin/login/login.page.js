@@ -1,7 +1,7 @@
 import React from 'react';
 
 // reactstrap components
-import { Container, Col, Alert } from 'reactstrap';
+import { Container, Col } from 'reactstrap';
 
 // core components
 import { LoginForm } from './form';
@@ -9,16 +9,17 @@ import { Login } from './login.service';
 import './login.css';
 
 import AuthUtil from '../../../../util/auth.util';
+import { showAlert } from '../../../../../actions/alert.action';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export class AdminLoginPage extends React.Component {
+class AdminLoginPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.formData = {};
 		this.state = {
 			...props,
 			errors: [],
-			success: false,
-			alert: false,
 			loading: false
 		};
 
@@ -41,20 +42,20 @@ export class AdminLoginPage extends React.Component {
 		Login(this.formData).then(data => {
 			if (data.message) {
 				this.setState({
-					alert: true,
-					success: false,
 					loading: false,
-					message: data.message,
 					errors: data.errors || {}
 				});
+
+				// Show Alert
+				this.props.showAlert(true, false, data.message);
 			} else {
 				this.setState({
-					alert: true,
-					success: true,
 					loading: false,
-					message: 'Success Login',
 					errors: []
 				});
+
+				// Show Alert
+				this.props.showAlert(true, true, 'Success Login');
 
 				// Set Authenticated User
 				AuthUtil.setAuthenticatedUser(data);
@@ -93,12 +94,6 @@ export class AdminLoginPage extends React.Component {
 							backgroundImage: 'url(' + require('assets/img/login.jpg') + ')'
 						}}
 					></div>
-					<Alert
-						isOpen={this.state.alert}
-						color={this.state.success ? 'success' : 'danger'}
-					>
-						{this.state.message}
-					</Alert>
 					<div className='content'>
 						<Container>
 							<Col className='ml-auto mr-auto' md='4'>
@@ -118,3 +113,18 @@ export class AdminLoginPage extends React.Component {
 		);
 	}
 }
+
+AdminLoginPage.protoTypes = {
+	showAlert: PropTypes.func.isRequired,
+	alert: PropTypes.bool.isRequired,
+	succcess: PropTypes.bool.isRequired,
+	message: PropTypes.string.isRequired
+};
+
+const mapStateToProps = state => ({
+	alert: state.alert.show,
+	succcess: state.alert.succcess,
+	message: state.alert.message
+});
+
+export default connect(mapStateToProps, { showAlert })(AdminLoginPage);

@@ -1,8 +1,7 @@
 import React from 'react';
-import queryString from 'query-string';
 
 // reactstrap components
-import { Container, Col, Alert } from 'reactstrap';
+import { Container, Col } from 'reactstrap';
 
 // core components
 import { LoginForm } from './form';
@@ -10,16 +9,17 @@ import { Login } from './login.service';
 import './login.css';
 
 import AuthUtil from '../../../../util/auth.util';
+import { showAlert } from '../../../../../actions/alert.action';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export class CustomerLoginPage extends React.Component {
+class CustomerLoginPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.formData = {};
 		this.state = {
 			...props,
 			errors: [],
-			success: false,
-			alert: false,
 			loading: false
 		};
 
@@ -34,18 +34,6 @@ export class CustomerLoginPage extends React.Component {
 		document.body.scrollTop = 0;
 	}
 
-	onSuccessRegister() {
-		const value = queryString.parse(this.props.location.search);
-		const loginSuccess = value.success;
-		if (loginSuccess) {
-			this.setState({
-				success: true,
-				alert: true,
-				message: 'You can now Sign in your account.'
-			});
-		}
-	}
-
 	onSubmit = event => {
 		event.preventDefault();
 		this.setState({
@@ -54,21 +42,18 @@ export class CustomerLoginPage extends React.Component {
 		Login(this.formData).then(data => {
 			if (data.message) {
 				this.setState({
-					alert: true,
-					success: false,
 					loading: false,
-					message: data.message,
 					errors: data.errors || {}
 				});
+				// Show Alert
+				this.props.showAlert(true, false, data.message);
 			} else {
 				this.setState({
-					alert: true,
-					success: true,
 					loading: false,
-					message: 'Success Login',
 					errors: []
 				});
-
+				// Show Alert
+				this.props.showAlert(true, true, 'Success Login');
 				// Set Authenticated User
 				AuthUtil.setAuthenticatedUser(data);
 			}
@@ -78,10 +63,6 @@ export class CustomerLoginPage extends React.Component {
 	onInputChange = (name, value) => {
 		this.formData[name] = value;
 	};
-
-	componentDidMount() {
-		this.onSuccessRegister();
-	}
 
 	render() {
 		const fields = [
@@ -110,12 +91,6 @@ export class CustomerLoginPage extends React.Component {
 							backgroundImage: 'url(' + require('assets/img/login.jpg') + ')'
 						}}
 					></div>
-					<Alert
-						isOpen={this.state.alert}
-						color={this.state.success ? 'success' : 'danger'}
-					>
-						{this.state.message}
-					</Alert>
 					<div className='content'>
 						<Container>
 							<Col className='ml-auto mr-auto' md='4'>
@@ -135,3 +110,18 @@ export class CustomerLoginPage extends React.Component {
 		);
 	}
 }
+
+CustomerLoginPage.protoTypes = {
+	showAlert: PropTypes.func.isRequired,
+	alert: PropTypes.bool.isRequired,
+	succcess: PropTypes.bool.isRequired,
+	message: PropTypes.string.isRequired
+};
+
+const mapStateToProps = state => ({
+	alert: state.alert.show,
+	succcess: state.alert.succcess,
+	message: state.alert.message
+});
+
+export default connect(mapStateToProps, { showAlert })(CustomerLoginPage);

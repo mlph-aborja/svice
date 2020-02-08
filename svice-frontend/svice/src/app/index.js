@@ -8,14 +8,15 @@ import '../assets/demo/demo.css';
 import '../assets/demo/nucleo-icons-page-styles.css';
 import '../../src/index.css';
 
-import { CustomerSignUpPage } from './views/pages/customer/signup';
-import { CustomerLoginPage } from './views/pages/customer/login';
-
-import { AdminLoginPage } from './views/pages/admin/login';
+import CustomerSignUpPage from './views/pages/customer/signup/signup.page';
+import CustomerLoginPage from './views/pages/customer/login/login.page';
+import AdminLoginPage from './views/pages/admin/login/login.page';
+import Alert from './components/alert';
 
 export default function App(props) {
 	return (
 		<BrowserRouter>
+			<Alert />
 			<Switch>
 				<Switch>
 					<Route

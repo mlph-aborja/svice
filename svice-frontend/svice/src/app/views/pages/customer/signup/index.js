@@ -1,2 +1,2 @@
-export * from "./signup.page"
-export * from "./signup.service"
+export { default } from './signup.page';
+export { default } from './signup.service';

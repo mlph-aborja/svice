@@ -1,2 +1,2 @@
-export * from "./login.page"
-export * from "./login.service"
+export { default } from './login.page';
+export { default } from './login.service';
