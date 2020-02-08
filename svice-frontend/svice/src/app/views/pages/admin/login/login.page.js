@@ -18,7 +18,8 @@ export class AdminLoginPage extends React.Component {
 			...props,
 			errors: [],
 			success: false,
-			alert: false
+			alert: false,
+			loading: false
 		};
 
 		this.onInitPage();
@@ -104,6 +105,7 @@ export class AdminLoginPage extends React.Component {
 								<LoginForm
 									fields={fields}
 									errors={this.state.errors}
+									loading={this.state.loading}
 									title={process.env.REACT_APP_TITLE}
 									onSubmit={this.onSubmit}
 									onInputChange={this.onInputChange}

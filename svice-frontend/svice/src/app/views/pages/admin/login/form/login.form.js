@@ -13,7 +13,9 @@ import {
 	InputGroupText,
 	InputGroup,
 	FormGroup,
-	FormText
+	FormText,
+	ButtonToolbar,
+	Spinner
 } from 'reactstrap';
 
 export class LoginForm extends React.Component {
@@ -52,6 +54,19 @@ export class LoginForm extends React.Component {
 			errors: nextProps.errors
 		};
 	}
+
+	showSpinner = () => {
+		if (this.props.loading) {
+			return (
+				<Spinner
+					className='loader-spinner'
+					as='span'
+					size='sm'
+					aria-hidden='true'
+				/>
+			);
+		}
+	};
 
 	render() {
 		return (
@@ -95,6 +110,7 @@ export class LoginForm extends React.Component {
 						})}
 					</CardBody>
 					<CardFooter className='text-center'>
+						<ButtonToolbar></ButtonToolbar>
 						<Button
 							block
 							className='btn-round'
@@ -102,6 +118,7 @@ export class LoginForm extends React.Component {
 							onClick={e => this.props.onSubmit(e)}
 							size='lg'
 						>
+							{this.showSpinner()}
 							Sign in
 						</Button>
 					</CardFooter>
