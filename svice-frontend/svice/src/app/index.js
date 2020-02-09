@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router-dom';
 
 // styles for this kit
 import '../assets/css/bootstrap.min.css';
@@ -22,12 +23,13 @@ import {
 } from './views/pages/customer';
 
 import { AdminLoginPage, AdminProfilePage } from './views/pages/admin';
+const history = createBrowserHistory();
 
 const App = props => {
 	return (
-		<BrowserRouter>
+		<Router history={history}>
 			<AlertBox />
-			<AppNavbar />
+			<AppNavbar history={history} />
 			<GuardProvider>
 				<GuardedRoute
 					path='/signup'
@@ -57,7 +59,7 @@ const App = props => {
 					/>
 				</GuardProvider>
 			</GuardProvider>
-		</BrowserRouter>
+		</Router>
 	);
 };
 
