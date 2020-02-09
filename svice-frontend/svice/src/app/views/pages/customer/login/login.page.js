@@ -54,8 +54,12 @@ class CustomerLoginPage extends React.Component {
 				});
 				// Show Alert
 				this.props.showAlert(true, true, 'Success Login');
+
 				// Set Authenticated User
 				AuthUtil.setAuthenticatedUser(data);
+
+				// Redirect to admin profile page
+				this.props.history.push('/');
 			}
 		});
 	};

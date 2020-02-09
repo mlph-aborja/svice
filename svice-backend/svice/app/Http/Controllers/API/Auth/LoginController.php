@@ -54,6 +54,7 @@ class LoginController extends Controller
 
         return response([
             'user' => $user,
+            'roles' => $user->getRoleNames(),
             'access_token' => $accessToken
         ]);
     }

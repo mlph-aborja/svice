@@ -72,7 +72,7 @@ class AdminLoginPage extends React.Component {
 		AuthUtil.setAuthenticatedUser(data);
 
 		// Set state
-		this.props.authenticateUser(data.user, data.access_token);
+		this.props.authenticateUser(data);
 	};
 
 	onInputChange = (name, value) => {
@@ -138,7 +138,8 @@ AdminLoginPage.propTypes = {
 
 	authenticateUser: PropTypes.func.isRequired,
 	authenticated_user: PropTypes.object.isRequired,
-	access_token: PropTypes.string.isRequired
+	access_token: PropTypes.string.isRequired,
+	roles: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -147,7 +148,8 @@ const mapStateToProps = state => ({
 	message: state.alertBox.message,
 
 	authenticated_user: state.auth.authenticated_user,
-	access_token: state.auth.access_token
+	access_token: state.auth.access_token,
+	roles: state.auth.roles
 });
 
 export default connect(mapStateToProps, { showAlert, authenticateUser })(

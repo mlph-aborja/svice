@@ -30,7 +30,8 @@ if (AuthUtil.getAuthenticatedUser() && AuthUtil.getAccessToken()) {
 		type: AUTHENTICATE_USER,
 		payload: {
 			authenticated_user: AuthUtil.getAuthenticatedUser(),
-			access_token: AuthUtil.getAccessToken()
+			access_token: AuthUtil.getAccessToken(),
+			roles: AuthUtil.getAuthenticatedUserRoles()
 		}
 	});
 }
