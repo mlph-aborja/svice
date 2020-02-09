@@ -6,6 +6,7 @@ use App\Contracts\Repositories\RoleRepositoryInterface;
 use App\Contracts\Repositories\UserRepositoryInterface;
 use App\Eloquent\Models\User;
 use App\Eloquent\Models\Role;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -28,20 +29,19 @@ class RegistrationController extends Controller
 
     protected $roleRepository;
 
+    const VALIDATION_RULES_USER_REGISTER = [
+        'first_name' => 'required',
+        'middle_name' => '',
+        'last_name' => 'required',
+        'email' => 'email|required|unique:users',
+        'password' => 'required|confirmed'
+    ];
+
     public function __construct( UserRepositoryInterface $userRepository,
                                  RoleRepositoryInterface $roleRepository )
     {
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
-    }
-
-    /**
-     * @param Request $request
-     * @return Response
-     */
-    public function registerAdmin (Request $request): Response
-    {
-        return $this->register($request, $this->roleRepository->adminRole());
     }
 
     /**
@@ -65,6 +65,15 @@ class RegistrationController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return Response
+     */
+    public function registerAdmin (Request $request): Response
+    {
+        return $this->register($request, $this->roleRepository->adminRole());
+    }
+
+    /**
      * Validate user details upon registration and save to database
      *
      * @param Request $request
@@ -73,20 +82,10 @@ class RegistrationController extends Controller
      */
     protected function register(Request $request, Role $role) : Response
     {
-        $data = $this->validateParameters($request);
+        $data = $request->validate(self::VALIDATION_RULES_USER_REGISTER);
         $data['password'] = Hash::make($request->password);
-        $data['role_id'] = $role->id;
         $user = $this->userRepository->create($data);
-        return response(['user' => $user]); // TODO: Make a template for response format
-    }
-
-    protected function validateParameters (Request $request) {
-        return $request->validate([
-            'first_name' => 'required',
-            'middle_name' => '',
-            'last_name' => 'required',
-            'email' => 'email|required|unique:users',
-            'password' => 'required|confirmed'
-        ]);
+        $role->users()->save($user);
+        return new UserResource($user);
     }
 }
