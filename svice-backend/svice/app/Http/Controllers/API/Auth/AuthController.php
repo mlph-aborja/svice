@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class AuthController extends Controller
 {
@@ -70,7 +69,7 @@ class AuthController extends Controller
     /**
      * Get Authenticated User's Details
      *
-     * @return Response
+     * @return
      */
     public function getAuthenticatedUserDetails()
     {

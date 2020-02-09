@@ -6,11 +6,9 @@ use App\Contracts\Repositories\RoleRepositoryInterface;
 use App\Contracts\Repositories\UserRepositoryInterface;
 use App\Eloquent\Models\User;
 use App\Eloquent\Models\Role;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
 {

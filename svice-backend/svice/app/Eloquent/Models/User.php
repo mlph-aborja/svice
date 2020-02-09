@@ -4,10 +4,10 @@ namespace App\Eloquent;
 
 use App\Eloquent\Models\Role;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
