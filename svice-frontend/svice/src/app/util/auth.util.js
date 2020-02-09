@@ -18,4 +18,8 @@ export default class AuthUtil {
 	static getAuthenticatedUser() {
 		return reactLocalStorage.getObject('user');
 	}
+
+	static isAuthenticated() {
+		return AuthUtil.getAccessToken() && AuthUtil.getAuthenticatedUser();
+	}
 }

@@ -7,7 +7,7 @@ const initialState = {
 	isAuthenticated: false
 };
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
 	switch (action.type) {
 		case AUTHENTICATE_USER:
 			const payload = action.payload;
@@ -30,4 +30,4 @@ export default function(state = initialState, action) {
 		default:
 			return state;
 	}
-}
+};

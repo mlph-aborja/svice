@@ -8,41 +8,71 @@ import '../assets/demo/demo.css';
 import '../assets/demo/nucleo-icons-page-styles.css';
 import '../../src/index.css';
 
-import CustomerSignUpPage from './views/pages/customer/signup/signup.page';
-import CustomerLoginPage from './views/pages/customer/login/login.page';
-import AdminLoginPage from './views/pages/admin/login/login.page';
-import AdminProfilePage from './views/pages/admin/profile/profile.page';
+import { GuardProvider, GuardedRoute } from 'react-router-guards';
 import AlertBox from './components/alert-box';
 import AppNavbar from './components/navbars/AppNavbar';
+import hideNavbar from './actions/navbar.action';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import authGuard from './guards/auth.guard';
+import {
+	CustomerHomePage,
+	CustomerLoginPage,
+	CustomerSignUpPage
+} from './views/pages/customer';
+
+import { AdminLoginPage, AdminProfilePage } from './views/pages/admin';
 
 const App = props => {
-	console.log('HELLO APPA');
+	const hideNavigationBar = () => {
+		return props.isAuthenticated ? (
+			<React.Fragment>
+				<AppNavbar />
+				<h1>HELLOW</h1>
+			</React.Fragment>
+		) : null;
+	};
+
 	return (
 		<BrowserRouter>
 			<AlertBox />
-			<AppNavbar />
-			<Switch>
-				<Route
-					path='/signup'
-					render={props => <CustomerSignUpPage {...props} />}
-				/>
-				<Route
+			<GuardProvider>
+				<GuardedRoute
 					path='/login'
 					render={props => <CustomerLoginPage {...props} />}
 				/>
-				<Route
+				<GuardedRoute
+					path='/signup'
+					render={props => <CustomerSignUpPage {...props} />}
+				/>
+				<GuardedRoute
 					path='/admin/login'
 					render={props => <AdminLoginPage {...props} />}
 				/>
-				<Route
-					path='/admin/profile'
-					render={props => <AdminProfilePage {...props} />}
-				/>
-
-				<Redirect from='/' to='/login' />
-			</Switch>
+				<GuardProvider guards={[authGuard]}>
+					<GuardedRoute
+						path='/admin/profile'
+						render={props => <AdminProfilePage {...props} />}
+					/>
+					<GuardedRoute
+						path='/'
+						render={props => <CustomerHomePage {...props} />}
+					/>
+				</GuardProvider>
+			</GuardProvider>
 		</BrowserRouter>
 	);
 };
 
-export default App;
+App.propTypes = {
+	hideNavbar: PropTypes.func.isRequired,
+	hide: PropTypes.bool.isRequired,
+	isAuthenticated: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = state => ({
+	hide: state.navbar.hide,
+	isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { hideNavbar })(App);
