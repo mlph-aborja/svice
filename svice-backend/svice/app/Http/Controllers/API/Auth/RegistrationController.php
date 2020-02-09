@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class RegistrationController extends Controller
 {
@@ -27,22 +28,29 @@ class RegistrationController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function register(Request $request) : Response 
+    public function register(Request $request): Response
     {
         // Validate user's credentials
         $validatedData = $request->validate([
             'first_name' => 'required',
             'middle_name' => '',
-            'last_name' => 'required', 
+            'last_name' => 'required',
             'email' => 'email|required|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'role' => 'required'
         ]);
 
         // Hash user's password
         $validatedData['password'] = Hash::make($request->password);
 
+        // Get role
+        $role = Role::findByName($validatedData['role']);
+
         // Save to database
         $user = User::create($validatedData);
+
+        // Set role to user
+        $user->assignRole($role);
 
         return response(['user' => $user]);
     }

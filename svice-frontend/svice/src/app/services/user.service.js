@@ -20,8 +20,10 @@ export const login = params => {
 		});
 };
 
-export const register = params => {
+export const register = (params, role) => {
 	const url = process.env.REACT_APP_API_ENDPOINT + '/register';
+
+	params['role'] = role;
 
 	return Axios.post(url, params)
 		.then(response => response.data)

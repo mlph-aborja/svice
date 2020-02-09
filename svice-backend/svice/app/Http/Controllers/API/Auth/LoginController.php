@@ -27,7 +27,7 @@ class LoginController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function login(Request $request) : Response
+    public function login(Request $request): Response
     {
         // Check login credentials
         $loginData = $request->validate([
@@ -36,11 +36,10 @@ class LoginController extends Controller
         ]);
 
         // Check if user has valid credentials
-        if ($this->hasValidLoginCredentials($loginData)) 
-        {
+        if ($this->hasValidLoginCredentials($loginData)) {
             return response(['message' => 'Invalid Credentials']);
         }
-        
+
         // Get Authenticated User
         $user = User::where('email', $loginData['email'])->first();
 
@@ -59,7 +58,7 @@ class LoginController extends Controller
      * @param $loginData
      * @return bool
      */
-    private function hasValidLoginCredentials($loginData) : bool 
+    private function hasValidLoginCredentials($loginData): bool
     {
         return !auth()->attempt($loginData);
     }
