@@ -24,18 +24,10 @@ import {
 import { AdminLoginPage, AdminProfilePage } from './views/pages/admin';
 
 const App = props => {
-	const hideNavigationBar = () => {
-		return props.isAuthenticated ? (
-			<React.Fragment>
-				<AppNavbar />
-				<h1>HELLOW</h1>
-			</React.Fragment>
-		) : null;
-	};
-
 	return (
 		<BrowserRouter>
 			<AlertBox />
+			<AppNavbar />
 			<GuardProvider>
 				<GuardedRoute
 					path='/signup'

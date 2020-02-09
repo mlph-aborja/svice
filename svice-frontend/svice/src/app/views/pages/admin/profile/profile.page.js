@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LogoutButton from '../../../../components/buttons/logout/logout';
 import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
@@ -10,7 +9,6 @@ class AdminProfilePage extends Component {
 			<div>
 				{' ' + this.props.isAuthenticated}
 				<br />
-				<LogoutButton redirectUrl='/admin/login' history={this.props.history} />
 			</div>
 		);
 	}
