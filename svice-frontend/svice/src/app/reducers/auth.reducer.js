@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 const initialState = {
 	authenticated_user: {},
 	access_token: '',
+	roles: [],
 	isAuthenticated: false
 };
 
@@ -18,14 +19,16 @@ export default (state = initialState, action) => {
 				isAuthenticated: !isEmpty(
 					payload.authenticated_user,
 					payload.access_token
-				)
+				),
+				roles: payload.roles
 			};
 		case LOGOUT_USER:
 			return {
 				...state,
 				authenticated_user: {},
 				access_token: '',
-				isAuthenticated: false
+				isAuthenticated: false,
+				roles: []
 			};
 		default:
 			return state;

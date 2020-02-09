@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -23,7 +23,7 @@ class AuthController extends Controller
      * 
      * @return Response
      */
-    public function getAuthenticatedUserDetails() : Response
+    public function getAuthenticatedUserDetails(): Response
     {
         $user = Auth::user();
 
