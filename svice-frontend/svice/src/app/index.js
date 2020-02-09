@@ -13,11 +13,14 @@ import CustomerLoginPage from './views/pages/customer/login/login.page';
 import AdminLoginPage from './views/pages/admin/login/login.page';
 import AdminProfilePage from './views/pages/admin/profile/profile.page';
 import AlertBox from './components/alert-box';
+import AppNavbar from './components/navbars/AppNavbar';
 
-export default function App(props) {
+const App = props => {
+	console.log('HELLO APPA');
 	return (
 		<BrowserRouter>
 			<AlertBox />
+			<AppNavbar />
 			<Switch>
 				<Route
 					path='/signup'
@@ -40,4 +43,6 @@ export default function App(props) {
 			</Switch>
 		</BrowserRouter>
 	);
-}
+};
+
+export default App;

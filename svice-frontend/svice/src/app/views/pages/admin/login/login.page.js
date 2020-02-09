@@ -133,7 +133,7 @@ class AdminLoginPage extends React.Component {
 AdminLoginPage.propTypes = {
 	showAlert: PropTypes.func.isRequired,
 	alert: PropTypes.bool.isRequired,
-	succcess: PropTypes.bool.isRequired,
+	success: PropTypes.bool.isRequired,
 	message: PropTypes.string.isRequired,
 
 	authenticateUser: PropTypes.func.isRequired,
@@ -143,7 +143,7 @@ AdminLoginPage.propTypes = {
 
 const mapStateToProps = state => ({
 	alert: state.alertBox.show,
-	succcess: state.alertBox.success,
+	success: state.alertBox.success,
 	message: state.alertBox.message,
 
 	authenticated_user: state.auth.authenticated_user,

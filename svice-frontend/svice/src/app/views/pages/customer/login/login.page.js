@@ -118,13 +118,13 @@ class CustomerLoginPage extends React.Component {
 CustomerLoginPage.propTypes = {
 	showAlert: PropTypes.func.isRequired,
 	alert: PropTypes.bool.isRequired,
-	succcess: PropTypes.bool.isRequired,
+	success: PropTypes.bool.isRequired,
 	message: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
 	alert: state.alertBox.show,
-	succcess: state.alertBox.succcess,
+	success: state.alertBox.success,
 	message: state.alertBox.message
 });
 
