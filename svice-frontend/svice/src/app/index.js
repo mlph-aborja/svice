@@ -15,7 +15,6 @@ import hideNavbar from './actions/navbar.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import authGuard from './guards/auth.guard';
-import roleGuard from './guards/role.guard';
 import {
 	CustomerHomePage,
 	CustomerLoginPage,
