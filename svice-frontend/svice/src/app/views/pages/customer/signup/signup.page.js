@@ -3,11 +3,11 @@ import React from 'react';
 import { Container, Col } from 'reactstrap';
 
 import { SignUpForm } from './form';
-import { Register } from './signup.service';
 import './signup.css';
-import { showAlert } from '../../../../../actions/alert-box.action';
+import { showAlert } from '../../../../actions/alert-box.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { register } from '../../../../services/user.service';
 
 class CustomerSignUpPage extends React.Component {
 	constructor(props) {
@@ -35,7 +35,7 @@ class CustomerSignUpPage extends React.Component {
 		this.setState({
 			loading: true
 		});
-		Register(this.formData).then(data => {
+		register(this.formData).then(data => {
 			if (data.errors) {
 				this.setState({
 					loading: false,
@@ -129,7 +129,7 @@ class CustomerSignUpPage extends React.Component {
 	}
 }
 
-CustomerSignUpPage.protoTypes = {
+CustomerSignUpPage.propTypes = {
 	showAlert: PropTypes.func.isRequired,
 	alert: PropTypes.bool.isRequired,
 	succcess: PropTypes.bool.isRequired,

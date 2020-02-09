@@ -11,6 +11,7 @@ import '../../src/index.css';
 import CustomerSignUpPage from './views/pages/customer/signup/signup.page';
 import CustomerLoginPage from './views/pages/customer/login/login.page';
 import AdminLoginPage from './views/pages/admin/login/login.page';
+import AdminProfilePage from './views/pages/admin/profile/profile.page';
 import AlertBox from './components/alert-box';
 
 export default function App(props) {
@@ -18,21 +19,24 @@ export default function App(props) {
 		<BrowserRouter>
 			<AlertBox />
 			<Switch>
-				<Switch>
-					<Route
-						path='/signup'
-						render={props => <CustomerSignUpPage {...props} />}
-					/>
-					<Route
-						path='/login'
-						render={props => <CustomerLoginPage {...props} />}
-					/>
-					<Route
-						path='/admin/login'
-						render={props => <AdminLoginPage {...props} />}
-					/>
-					<Redirect from='/' to='/login' />
-				</Switch>
+				<Route
+					path='/signup'
+					render={props => <CustomerSignUpPage {...props} />}
+				/>
+				<Route
+					path='/login'
+					render={props => <CustomerLoginPage {...props} />}
+				/>
+				<Route
+					path='/admin/login'
+					render={props => <AdminLoginPage {...props} />}
+				/>
+				<Route
+					path='/admin/profile'
+					render={props => <AdminProfilePage {...props} />}
+				/>
+
+				<Redirect from='/' to='/login' />
 			</Switch>
 		</BrowserRouter>
 	);

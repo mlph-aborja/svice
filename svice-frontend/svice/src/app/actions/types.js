@@ -1,0 +1,3 @@
+export const SHOW_ALERT_BOX = 'SHOW_ALERT_BOX';
+export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';

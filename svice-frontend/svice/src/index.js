@@ -22,6 +22,18 @@ import ReactDOM from 'react-dom';
 import App from 'app';
 import { Provider } from 'react-redux';
 import store from './store';
+import AuthUtil from './app/util/auth.util';
+import { AUTHENTICATE_USER } from './app/actions/types';
+
+if (AuthUtil.getAuthenticatedUser() && AuthUtil.getAccessToken()) {
+	store.dispatch({
+		type: AUTHENTICATE_USER,
+		payload: {
+			authenticated_user: AuthUtil.getAuthenticatedUser(),
+			access_token: AuthUtil.getAccessToken()
+		}
+	});
+}
 
 ReactDOM.render(
 	<Provider store={store}>

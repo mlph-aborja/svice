@@ -5,13 +5,13 @@ import { Container, Col } from 'reactstrap';
 
 // core components
 import { LoginForm } from './form';
-import { Login } from './login.service';
 import './login.css';
 
 import AuthUtil from '../../../../util/auth.util';
-import { showAlert } from '../../../../../actions/alert-box.action';
+import { showAlert } from '../../../../actions/alert-box.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { login } from '../../../../services/user.service';
 
 class CustomerLoginPage extends React.Component {
 	constructor(props) {
@@ -39,7 +39,7 @@ class CustomerLoginPage extends React.Component {
 		this.setState({
 			loading: true
 		});
-		Login(this.formData).then(data => {
+		login(this.formData).then(data => {
 			if (data.message) {
 				this.setState({
 					loading: false,
@@ -115,7 +115,7 @@ class CustomerLoginPage extends React.Component {
 	}
 }
 
-CustomerLoginPage.protoTypes = {
+CustomerLoginPage.propTypes = {
 	showAlert: PropTypes.func.isRequired,
 	alert: PropTypes.bool.isRequired,
 	succcess: PropTypes.bool.isRequired,

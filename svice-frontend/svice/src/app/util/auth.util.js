@@ -1,6 +1,6 @@
 import { reactLocalStorage } from 'reactjs-localstorage';
 
-class AuthUtil {
+export default class AuthUtil {
 	static setAuthenticatedUser(data) {
 		reactLocalStorage.setObject('user', data.user);
 		reactLocalStorage.set('access_token', data.access_token);
@@ -19,5 +19,3 @@ class AuthUtil {
 		return reactLocalStorage.getObject('user');
 	}
 }
-
-export default AuthUtil;

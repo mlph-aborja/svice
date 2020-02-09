@@ -5,13 +5,14 @@ import { Container, Col } from 'reactstrap';
 
 // core components
 import { LoginForm } from './form';
-import { Login } from './login.service';
 import './login.css';
 
 import AuthUtil from '../../../../util/auth.util';
-import { showAlert } from '../../../../../actions/alert-box.action';
+import { showAlert } from '../../../../actions/alert-box.action';
+import { authenticateUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { login } from '../../../../services/user.service';
 
 class AdminLoginPage extends React.Component {
 	constructor(props) {
@@ -39,7 +40,7 @@ class AdminLoginPage extends React.Component {
 		this.setState({
 			loading: true
 		});
-		Login(this.formData).then(data => {
+		login(this.formData).then(data => {
 			if (data.message) {
 				this.setState({
 					loading: false,
@@ -58,9 +59,20 @@ class AdminLoginPage extends React.Component {
 				this.props.showAlert(true, true, 'Success Login');
 
 				// Set Authenticated User
-				AuthUtil.setAuthenticatedUser(data);
+				this.onAuthenticateUser(data);
+
+				// Redirect to admin profile page
+				this.props.history.push('/admin/profile');
 			}
 		});
+	};
+
+	onAuthenticateUser = data => {
+		// Save to local storage
+		AuthUtil.setAuthenticatedUser(data);
+
+		// Set state
+		this.props.authenticateUser(data.user, data.access_token);
 	};
 
 	onInputChange = (name, value) => {
@@ -118,17 +130,26 @@ class AdminLoginPage extends React.Component {
 	}
 }
 
-AdminLoginPage.protoTypes = {
+AdminLoginPage.propTypes = {
 	showAlert: PropTypes.func.isRequired,
 	alert: PropTypes.bool.isRequired,
 	succcess: PropTypes.bool.isRequired,
-	message: PropTypes.string.isRequired
+	message: PropTypes.string.isRequired,
+
+	authenticateUser: PropTypes.func.isRequired,
+	authenticated_user: PropTypes.object.isRequired,
+	access_token: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
 	alert: state.alertBox.show,
-	succcess: state.alertBox.succcess,
-	message: state.alertBox.message
+	succcess: state.alertBox.success,
+	message: state.alertBox.message,
+
+	authenticated_user: state.auth.authenticated_user,
+	access_token: state.auth.access_token
 });
 
-export default connect(mapStateToProps, { showAlert })(AdminLoginPage);
+export default connect(mapStateToProps, { showAlert, authenticateUser })(
+	AdminLoginPage
+);

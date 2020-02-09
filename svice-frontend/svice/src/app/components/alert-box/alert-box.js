@@ -1,32 +1,30 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { showAlert } from '../../../actions/alert-box.action';
+import { showAlert } from '../../actions/alert-box.action';
 import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
 import './alert-box.css';
 
-class AlertBox extends Component {
-	show = () => {
-		if (this.props.alert) {
+const AlertBox = props => {
+	const show = () => {
+		if (props.alert) {
 			return (
 				<Alert
 					className='alert-box'
-					isOpen={this.props.alert}
-					color={this.props.success ? 'success' : 'danger'}
+					isOpen={props.alert}
+					color={props.success ? 'success' : 'danger'}
 				>
-					{this.props.message}
+					{props.message}
 				</Alert>
 			);
 		}
 	};
 
-	render() {
-		return <React.Fragment>{this.show()}</React.Fragment>;
-	}
-}
+	return <React.Fragment>{show()}</React.Fragment>;
+};
 
-AlertBox.protoTypes = {
+AlertBox.propTypes = {
 	showAlert: PropTypes.func.isRequired,
 	alert: PropTypes.bool.isRequired,
 	success: PropTypes.bool.isRequired,
