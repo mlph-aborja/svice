@@ -5,6 +5,7 @@ import { Container, Col } from 'reactstrap';
 import { SignUpForm } from './form';
 import './signup.css';
 import { showAlert } from '../../../../actions/alert-box.action';
+import hideNavbar from '../../../../actions/navbar.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { register } from '../../../../services/user.service';
@@ -59,8 +60,13 @@ class CustomerSignUpPage extends React.Component {
 		this.formData[name] = value;
 	};
 
+	componentDidMount() {
+		this.props.hideNavbar(true);
+	}
+
 	componentWillUnmount() {
 		this.props.showAlert(false, false, '');
+		this.props.hideNavbar(false);
 	}
 
 	render() {
@@ -135,13 +141,18 @@ CustomerSignUpPage.propTypes = {
 	alert: PropTypes.bool.isRequired,
 	success: PropTypes.bool.isRequired,
 	message: PropTypes.string.isRequired,
-	location: PropTypes.object.isRequired
+	location: PropTypes.object.isRequired,
+	hide: PropTypes.bool.isRequired,
+	hideNavbar: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
 	alert: state.alertBox.show,
 	success: state.alertBox.success,
-	message: state.alertBox.message
+	message: state.alertBox.message,
+	hide: state.navbar.hide
 });
 
-export default connect(mapStateToProps, { showAlert })(CustomerSignUpPage);
+export default connect(mapStateToProps, { showAlert, hideNavbar })(
+	CustomerSignUpPage
+);

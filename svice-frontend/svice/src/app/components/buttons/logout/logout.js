@@ -3,17 +3,24 @@ import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import AuthUtil from '../../../util/auth.util';
+import { Button } from 'reactstrap';
+import './logout.css';
 
-const LogoutButton = props => {
-	const onLogout = () => {
-		props.logoutUser();
+class LogoutButton extends React.Component {
+	onLogout = () => {
+		this.props.logoutUser();
 		AuthUtil.destroyAuthenticatedUser();
 		// Redirect to admin profile page
-		props.history.push(props.redirectUrl);
+		this.props.history.push(this.props.redirectUrl);
 	};
-
-	return <button onClick={onLogout}> LOGOUT </button>;
-};
+	render() {
+		return (
+			<Button className='btn-link logout-button' onClick={this.onLogout}>
+				LOGOUT
+			</Button>
+		);
+	}
+}
 
 LogoutButton.propTypes = {
 	authenticateUser: PropTypes.func.isRequired,
