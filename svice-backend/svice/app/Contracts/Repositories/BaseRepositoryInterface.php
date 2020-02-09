@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -29,9 +30,26 @@ interface BaseRepositoryInterface
     public function delete(Model $model): void;
 
     /**
+     * @param $id
+     */
+    public function findAndDelete($id): void;
+
+    /**
      * @param Model $model
      * @param array $attributes
      * @return Model
      */
     public function update(Model $model, array $attributes): Model;
+
+    /**
+     * @param $id
+     * @param array $attributes
+     * @return Model
+     */
+    public function findAndUpdate($id, array $attributes): Model;
+
+    /**
+     * @return Collection
+     */
+    public function all(): Collection;
 }
