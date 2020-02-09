@@ -1,7 +1,9 @@
 import Axios from 'axios';
 
-export const login = params => {
+export const login = (params, role) => {
 	const url = process.env.REACT_APP_API_ENDPOINT + '/login';
+
+	params['role'] = role;
 
 	return Axios.post(url, params)
 		.then(response => {

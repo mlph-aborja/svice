@@ -32,7 +32,8 @@ class LoginController extends Controller
         // Check login credentials
         $loginData = $request->validate([
             'email' => 'email|required',
-            'password' => 'required'
+            'password' => 'required',
+            'role' => 'required'
         ]);
 
         // Check if user has valid credentials
@@ -42,6 +43,11 @@ class LoginController extends Controller
 
         // Get Authenticated User
         $user = User::where('email', $loginData['email'])->first();
+
+        // Check user role
+        if (!$user->hasRole([$loginData['role']])) {
+            return response(['message' => 'Invalid Credentials']);
+        }
 
         // Create access token
         $accessToken = $user->createToken('authToken')->accessToken;
@@ -60,6 +66,9 @@ class LoginController extends Controller
      */
     private function hasValidLoginCredentials($loginData): bool
     {
-        return !auth()->attempt($loginData);
+        return !auth()->attempt([
+            'email' => $loginData['email'],
+            'password' => $loginData['password']
+        ]);
     }
 }
