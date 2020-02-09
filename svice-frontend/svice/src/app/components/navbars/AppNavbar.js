@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const AppNavbar = props => {
-	const [navbarColor, setNavbarColor] = React.useState('"bg-info');
+	const [navbarColor, setNavbarColor] = React.useState('bg-info');
 	const [collapseOpen, setCollapseOpen] = React.useState(false);
 
 	React.useEffect(() => {
@@ -31,7 +31,7 @@ const AppNavbar = props => {
 				document.documentElement.scrollTop < 400 ||
 				document.body.scrollTop < 400
 			) {
-				setNavbarColor('navbar-transparent');
+				setNavbarColor('bg-info');
 			}
 		};
 		window.addEventListener('scroll', updateNavbarColor);
@@ -41,7 +41,7 @@ const AppNavbar = props => {
 	});
 
 	const show = () => {
-		if (props.isAuthenticated) {
+		if (props.isAuthenticated && !props.hide) {
 			return (
 				<>
 					{collapseOpen ? (
@@ -113,13 +113,15 @@ AppNavbar.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
 	authenticated_user: PropTypes.object.isRequired,
 	access_token: PropTypes.string.isRequired,
-	isAuthenticated: PropTypes.bool.isRequired
+	isAuthenticated: PropTypes.bool.isRequired,
+	hide: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
 	authenticated_user: state.auth.authenticated_user,
 	access_token: state.auth.access_token,
-	isAuthenticated: state.auth.isAuthenticated
+	isAuthenticated: state.auth.isAuthenticated,
+	hide: state.navbar.hide
 });
 
 export default connect(mapStateToProps, { authenticateUser, logoutUser })(
