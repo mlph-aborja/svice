@@ -14,11 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', 'API\Auth\LoginController@login');
+Route::post('/login', 'API\Auth\AuthController@login')
+    ->name('login');
+Route::get('/logout', 'API\Auth\AuthController@logout')
+    ->name('logout');
 
-Route::post('/customer/register', 'API\Auth\RegistrationController@registerCustomer');
-Route::post('/service-provider/register', 'API\Auth\RegistrationController@registerServiceProvider');
+Route::post('/customers/register', 'API\Auth\RegistrationController@registerCustomer')
+    ->name('customer.register');
+Route::post('/service-providers/register', 'API\Auth\RegistrationController@registerServiceProvider')
+    ->name('service-provider.register');
 
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::post('/details', 'API\Auth\AuthController@getAuthenticatedUserDetails');
+    Route::get('/users/me', 'API\Auth\AuthController@getAuthenticatedUserDetails')
+        ->name('users.me');
+
+    Route::prefix('admin')->group(function () {
+        Route::apiResource("/users", 'API\UserController')
+        ->middleware('role.permission');
+        Route::put('/users/{userId}/{role}', 'API\UserController@assignRole')
+            ->name('admin.users.assignRole');
+    });
 });
