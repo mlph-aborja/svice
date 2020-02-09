@@ -4,6 +4,7 @@
 namespace App\Eloquent\Repositories;
 
 use App\Contracts\Repositories\BaseRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository implements BaseRepositoryInterface
@@ -74,5 +75,31 @@ class BaseRepository implements BaseRepositoryInterface
         }
         $model->save();
         return $model;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function all(): Collection
+    {
+        return $this->type::all();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAndUpdate($id, array $attributes): Model
+    {
+        $this->model = $this->find($id);
+        return $this->update($this->model, $attributes);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAndDelete($id): void
+    {
+        $this->model = $this->find($id);
+        $this->delete($this->model);
     }
 }

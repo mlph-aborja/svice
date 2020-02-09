@@ -17,18 +17,28 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function assignRole($id, Role $role): void
+    public function assignRole($id, Role $role): User
     {
         $this->model = $this->find($id);
-        $this->model->role_id = $role->getPrimaryKey();
-        $this->model->saveOrFail();
+        $role->users()->save($this->model);
+        return $this->model;
     }
 
     /**
      * @inheritDoc
      */
-    public function removeRole($id, Role $role): void
+    public function removeRole($id, Role $role): User
     {
-        // TODO: Implement removeRole() method.
+        $this->model = $this->find($id);
+        $role->users()->delete($this->model);
+        return $this->model;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByEmail(string $email): User
+    {
+        return $this->type::where('email', $email)->first();
     }
 }

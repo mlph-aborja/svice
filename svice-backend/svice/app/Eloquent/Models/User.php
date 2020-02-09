@@ -2,15 +2,17 @@
 
 namespace App\Eloquent;
 
+use App\Eloquent\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,10 +47,10 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function role(): HasOne
+    public function role()
     {
-        return $this->hasOne('App\Eloquent\Models\Role', 'id', 'role_id');
+        return $this->belongsTo(Role::class);
     }
 }
