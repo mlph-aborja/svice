@@ -15,6 +15,7 @@ import hideNavbar from './actions/navbar.action';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import authGuard from './guards/auth.guard';
+import roleGuard from './guards/role.guard';
 import {
 	CustomerHomePage,
 	CustomerLoginPage,
@@ -38,24 +39,29 @@ const App = props => {
 			<AlertBox />
 			<GuardProvider>
 				<GuardedRoute
-					path='/login'
-					render={props => <CustomerLoginPage {...props} />}
-				/>
-				<GuardedRoute
 					path='/signup'
+					exact
 					render={props => <CustomerSignUpPage {...props} />}
-				/>
-				<GuardedRoute
-					path='/admin/login'
-					render={props => <AdminLoginPage {...props} />}
 				/>
 				<GuardProvider guards={[authGuard]}>
 					<GuardedRoute
+						path='/admin/login'
+						exact
+						render={props => <AdminLoginPage {...props} />}
+					/>
+					<GuardedRoute
+						path='/login'
+						exact
+						render={props => <CustomerLoginPage {...props} />}
+					/>
+					<GuardedRoute
 						path='/admin/profile'
+						exact
 						render={props => <AdminProfilePage {...props} />}
 					/>
 					<GuardedRoute
 						path='/'
+						exact
 						render={props => <CustomerHomePage {...props} />}
 					/>
 				</GuardProvider>
