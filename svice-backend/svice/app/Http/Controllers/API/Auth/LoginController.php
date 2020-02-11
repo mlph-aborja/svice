@@ -27,28 +27,34 @@ class LoginController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function login(Request $request) : Response
+    public function login(Request $request): Response
     {
         // Check login credentials
         $loginData = $request->validate([
             'email' => 'email|required',
-            'password' => 'required'
+            'password' => 'required',
+            'role' => 'required'
         ]);
 
         // Check if user has valid credentials
-        if ($this->hasValidLoginCredentials($loginData)) 
-        {
+        if ($this->hasValidLoginCredentials($loginData)) {
             return response(['message' => 'Invalid Credentials']);
         }
-        
+
         // Get Authenticated User
         $user = User::where('email', $loginData['email'])->first();
+
+        // Check user role
+        if (!$user->hasRole([$loginData['role']])) {
+            return response(['message' => 'Invalid Credentials']);
+        }
 
         // Create access token
         $accessToken = $user->createToken('authToken')->accessToken;
 
         return response([
             'user' => $user,
+            'roles' => $user->getRoleNames(),
             'access_token' => $accessToken
         ]);
     }
@@ -59,8 +65,11 @@ class LoginController extends Controller
      * @param $loginData
      * @return bool
      */
-    private function hasValidLoginCredentials($loginData) : bool 
+    private function hasValidLoginCredentials($loginData): bool
     {
-        return !auth()->attempt($loginData);
+        return !auth()->attempt([
+            'email' => $loginData['email'],
+            'password' => $loginData['password']
+        ]);
     }
 }

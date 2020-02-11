@@ -1,127 +1,135 @@
 import React from 'react';
-import queryString from 'query-string';
 
 // reactstrap components
-import { Container, Col, Alert } from 'reactstrap';
+import { Container, Col } from 'reactstrap';
 
 // core components
 import { LoginForm } from './form';
-import { Login } from './login.service';
 import './login.css';
 
-export class CustomerLoginPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.formData = {};
-    this.state = {
-      ...props,
-      errors: [],
-      success: false,
-      alert: false
-    };
+import AuthUtil from '../../../../util/auth.util';
+import { showAlert } from '../../../../actions/alert-box.action';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login } from '../../../../services/user.service';
 
-    this.onInitPage();
-    this.onSuccessRegister();
-  }
+class CustomerLoginPage extends React.Component {
+	constructor(props) {
+		super(props);
+		this.formData = {};
+		this.state = {
+			...props,
+			errors: [],
+			loading: false
+		};
 
-  onInitPage() {
-    document.body.classList.add('login-page');
-    document.body.classList.add('sidebar-collapse');
-    document.documentElement.classList.remove('nav-open');
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-  }
+		this.onInitPage();
+	}
 
-  onSuccessRegister() {
-    const value = queryString.parse(this.props.location.search);
-    const loginSuccess = value.success;
-    if (loginSuccess) {
-      this.state.success = true;
-      this.state.alert = true;
-      this.state.message = 'You can now Sign in your account.';
-    }
-  }
+	onInitPage() {
+		document.body.classList.add('login-page');
+		document.body.classList.add('sidebar-collapse');
+		document.documentElement.classList.remove('nav-open');
+		window.scrollTo(0, 0);
+		document.body.scrollTop = 0;
+	}
 
-  onSubmit = event => {
-    event.preventDefault();
-    this.setState({
-      loading: true
-    });
-    Login(this.formData).then(data => {
-      if (data.message) {
-        this.setState({
-          alert: true,
-          success: false,
-          loading: false,
-          message: data.message,
-          errors: data.errors || {}
-        });
-      } else {
-        this.setState({
-          alert: true,
-          success: true,
-          loading: false,
-          message: 'Success Login',
-          errors: []
-        });
-        // What to do with the user object?
-        // const user = data.user;
-      }
-    });
-  };
+	onSubmit = event => {
+		event.preventDefault();
+		this.setState({
+			loading: true
+		});
+		login(this.formData, 'CUSTOMER').then(data => {
+			if (data.message) {
+				this.setState({
+					loading: false,
+					errors: data.errors || {}
+				});
+				// Show Alert
+				this.props.showAlert(true, false, data.message);
+			} else {
+				this.setState({
+					loading: false,
+					errors: []
+				});
+				// Show Alert
+				this.props.showAlert(true, true, 'Success Login');
 
-  onInputChange = (name, value) => {
-    this.formData[name] = value;
-  };
+				// Set Authenticated User
+				AuthUtil.setAuthenticatedUser(data);
 
-  render() {
-    const fields = [
-      {
-        required: true,
-        name: 'email',
-        type: 'email',
-        placeholder: 'Email',
-        icon: 'ui-1_email-85'
-      },
-      {
-        required: true,
-        name: 'password',
-        type: 'password',
-        placeholder: 'Password',
-        icon: 'ui-1_lock-circle-open'
-      }
-    ];
+				// Redirect to admin profile page
+				this.props.history.push('/');
+			}
+		});
+	};
 
-    return (
-      <React.Fragment>
-        <div className="page-header clear-filter" filter-color="blue">
-          <div
-            className="page-header-image"
-            style={{
-              backgroundImage: 'url(' + require('assets/img/login.jpg') + ')'
-            }}
-          ></div>
-          <Alert
-            isOpen={this.state.alert}
-            color={this.state.success ? 'success' : 'danger'}
-          >
-            {this.state.message}
-          </Alert>
-          <div className="content">
-            <Container>
-              <Col className="ml-auto mr-auto" md="4">
-                <LoginForm
-                  fields={fields}
-                  errors={this.state.errors}
-                  title={process.env.REACT_APP_TITLE}
-                  onSubmit={this.onSubmit}
-                  onInputChange={this.onInputChange}
-                />
-              </Col>
-            </Container>
-          </div>
-        </div>
-      </React.Fragment>
-    );
-  }
+	onInputChange = (name, value) => {
+		this.formData[name] = value;
+	};
+
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
+
+	render() {
+		const fields = [
+			{
+				required: true,
+				name: 'email',
+				type: 'email',
+				placeholder: 'Email',
+				icon: 'ui-1_email-85'
+			},
+			{
+				required: true,
+				name: 'password',
+				type: 'password',
+				placeholder: 'Password',
+				icon: 'ui-1_lock-circle-open'
+			}
+		];
+
+		return (
+			<React.Fragment>
+				<div className='page-header clear-filter' filter-color='blue'>
+					<div
+						className='page-header-image'
+						style={{
+							backgroundImage: 'url(' + require('assets/img/login.jpg') + ')'
+						}}
+					></div>
+					<div className='content'>
+						<Container>
+							<Col className='ml-auto mr-auto' md='4'>
+								<LoginForm
+									fields={fields}
+									errors={this.state.errors}
+									loading={this.state.loading}
+									title={process.env.REACT_APP_TITLE}
+									onSubmit={this.onSubmit}
+									onInputChange={this.onInputChange}
+								/>
+							</Col>
+						</Container>
+					</div>
+				</div>
+			</React.Fragment>
+		);
+	}
 }
+
+CustomerLoginPage.propTypes = {
+	showAlert: PropTypes.func.isRequired,
+	alert: PropTypes.bool.isRequired,
+	success: PropTypes.bool.isRequired,
+	message: PropTypes.string.isRequired
+};
+
+const mapStateToProps = state => ({
+	alert: state.alertBox.show,
+	success: state.alertBox.success,
+	message: state.alertBox.message
+});
+
+export default connect(mapStateToProps, { showAlert })(CustomerLoginPage);
