@@ -1,0 +1,52 @@
+version: '3'
+
+networks:
+  laravel:
+volumes:
+  mysqldata:
+    driver: local
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./cicd/nginx/Dockerfile
+    container_name: svice-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/app
+    depends_on:
+      - php-fpm
+    networks:
+      - laravel
+
+  mysql:
+    image: mysql:5.7
+    container_name: svice-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+    - mysqldata:/var/lib/mysql/
+    networks:
+      - laravel
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./cicd/php-fpm/Dockerfile
+    container_name: svice-php
+    volumes:
+      - ./:/app
+    ports:
+      - "9000:9000"
+    networks:
+      - laravel
