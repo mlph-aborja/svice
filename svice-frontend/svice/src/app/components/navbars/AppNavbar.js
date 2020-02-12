@@ -59,7 +59,7 @@ const AppNavbar = props => {
 						/>
 					) : null}
 					<Navbar
-						className={'fixed-top ' + navbarColor}
+						className={navbarColor}
 						color='info'
 						expand='lg'
 					>

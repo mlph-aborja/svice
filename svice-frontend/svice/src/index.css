@@ -28,3 +28,7 @@ code {
 #navbar-brand {
 	font-size: x-large;
 }
+
+.table-title {
+	display: inline;
+}

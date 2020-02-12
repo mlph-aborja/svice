@@ -1,5 +1,6 @@
 import { AUTHENTICATE_USER, LOGOUT_USER } from '../actions/types';
 import isEmpty from 'lodash/isEmpty';
+import Axios from 'axios';
 
 const initialState = {
 	authenticated_user: {},
@@ -12,6 +13,9 @@ export default (state = initialState, action) => {
 	switch (action.type) {
 		case AUTHENTICATE_USER:
 			const payload = action.payload;
+			Axios.defaults.headers.common[
+				'Authorization'
+			] = `Bearer ${payload.access_token}`;
 			return {
 				...state,
 				authenticated_user: payload.authenticated_user,
