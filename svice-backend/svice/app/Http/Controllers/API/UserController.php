@@ -28,8 +28,6 @@ class UserController extends Controller
 
     protected $roleRepository;
 
-    const DEFAULT_PASSWORD = "password";
-
     const VALIDATION_RULES_USER_NEW = [
         'first_name' => 'required',
         'last_name' => 'required',
@@ -106,9 +104,8 @@ class UserController extends Controller
     public function store (Request $request)
     {
         $input = $this->ignoringParameters($request->validate(self::VALIDATION_RULES_USER_NEW));
-        $input['password'] = Hash::make(self::DEFAULT_PASSWORD);
+        $input['password'] = Hash::make("password");
 
-        // TODO: Create an EMAIL NOTIFICATION Event to reset password
         return new UserResource($this->userRepository->create($input));
     }
 
@@ -131,7 +128,10 @@ class UserController extends Controller
     public function assignRole (Request $request, $userId, $roleName)
     {
         $role = $this->roleRepository->findByName(strtoupper($roleName));
-        if (!$role) throw BadRequest::invalidRole($roleName);
+        if (!$role)
+        {
+            throw BadRequest::invalidRole($roleName);
+        }
         return new UserResource($this->userRepository->assignRole($userId, $role));
     }
 }

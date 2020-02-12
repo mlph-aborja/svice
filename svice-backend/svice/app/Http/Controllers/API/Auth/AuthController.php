@@ -52,7 +52,6 @@ class AuthController extends Controller
 
         // Create access token
         $accessToken = $user->createToken('authToken')->accessToken;
-        // TODO:
         return response([
             'user' => $user,
             'access_token' => $accessToken
@@ -62,7 +61,8 @@ class AuthController extends Controller
     /*
      * Logout
      */
-    public function logout (Request $request) {
+    public function logout (Request $request)
+    {
         Auth::logout();
     }
 
