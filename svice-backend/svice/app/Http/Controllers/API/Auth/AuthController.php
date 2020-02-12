@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Contracts\Repositories\UserRepositoryInterface;
-use App\Exceptions\UnauthorizedException;
-use App\Http\Resources\UserResource;
+use App\Eloquent\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\UnauthorizedException;
+use App\Contracts\Repositories\RoleRepositoryInterface;
+use App\Contracts\Repositories\UserRepositoryInterface;
 
 class AuthController extends Controller
 {
@@ -21,10 +23,13 @@ class AuthController extends Controller
     */
 
     protected $userRepository;
+    protected $roleRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository,
+                                RoleRepositoryInterface $roleRepository)
     {
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -47,11 +52,15 @@ class AuthController extends Controller
             throw UnauthorizedException::invalidCredentials();
         }
 
+        // Get Role
+        $role = $this->roleRepository->findByName($request['role']);
+
         // Get Authenticated User
-        $user = $this->userRepository->findByEmail($credentials['email']);
+        $user = $this->userRepository->findByRoleAndEmail($role, $credentials['email']);
 
         // Create access token
         $accessToken = $user->createToken('authToken')->accessToken;
+        
         return response([
             'user' => $user,
             'access_token' => $accessToken
@@ -60,6 +69,7 @@ class AuthController extends Controller
 
     /*
      * Logout
+     * 
      */
     public function logout (Request $request)
     {
@@ -69,10 +79,21 @@ class AuthController extends Controller
     /**
      * Get Authenticated User's Details
      *
-     * @return
+     * @return UserResource
      */
     public function getAuthenticatedUserDetails()
     {
         return new UserResource(Auth::user());
     }
+
+    /**
+     * Has User role
+     *
+     * @return bool
+     */
+    public function isUserEmpty(User $user): bool
+    {
+        return $user == null;
+    }
+    
 }

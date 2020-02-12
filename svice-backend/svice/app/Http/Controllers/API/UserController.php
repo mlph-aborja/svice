@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Contracts\Repositories\RoleRepositoryInterface;
 use App\Contracts\Repositories\UserRepositoryInterface;
-use App\Exceptions\BadRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResources;
@@ -128,10 +127,7 @@ class UserController extends Controller
     public function assignRole (Request $request, $userId, $roleName)
     {
         $role = $this->roleRepository->findByName(strtoupper($roleName));
-        if (!$role)
-        {
-            throw BadRequest::invalidRole($roleName);
-        }
+        
         return new UserResource($this->userRepository->assignRole($userId, $role));
     }
 }

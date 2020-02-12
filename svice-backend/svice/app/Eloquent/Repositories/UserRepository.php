@@ -3,9 +3,10 @@
 
 namespace App\Eloquent\Repositories;
 
-use App\Contracts\Repositories\UserRepositoryInterface;
-use App\Eloquent\Models\Role;
 use App\Eloquent\User;
+use App\Eloquent\Models\Role;
+use App\Exceptions\BadRequest;
+use App\Contracts\Repositories\UserRepositoryInterface;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -40,5 +41,18 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function findByEmail(string $email): User
     {
         return $this->type::where('email', $email)->first();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByRoleAndEmail(Role $role, string $email): User
+    {
+        $this->model = $this->type::where('email', $email)->where('role_id', $role->id)->first();
+        if ($this->model == null)
+        {
+            throw BadRequest::invalidRole($role->name);
+        }
+        return $this->model;
     }
 }
