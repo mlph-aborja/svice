@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateUsersTable extends Migration
+class AddRoleToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,10 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('first_name')->default("");
-            $table->string('middle_name')->nullable();
-            $table->string('last_name')->default("");
+            $table->unsignedInteger('role_id')->nullable();
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles');
         });
     }
 
@@ -27,8 +28,11 @@ class UpdateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('first_name', 'middle_name', 'last_name');
+            $table->dropForeign('users_role_id_foreign');
+            $table->dropColumn('role_id');
         });
+        Schema::enableForeignKeyConstraints();
     }
 }

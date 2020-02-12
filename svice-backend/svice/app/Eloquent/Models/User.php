@@ -1,19 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Eloquent;
 
+use App\Eloquent\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\Relation;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Mockery\Matcher\Any;
-use phpDocumentor\Reflection\Types\Boolean;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, HasRoles;
+    use HasApiTokens, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +25,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -45,4 +45,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
