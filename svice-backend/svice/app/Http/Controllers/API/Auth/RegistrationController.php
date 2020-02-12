@@ -85,6 +85,6 @@ class RegistrationController extends Controller
         $data['password'] = Hash::make($request->password);
         $user = $this->userRepository->create($data);
         $role->users()->save($user);
-        return new UserResource($user);
+        return response(new UserResource($user));
     }
 }
