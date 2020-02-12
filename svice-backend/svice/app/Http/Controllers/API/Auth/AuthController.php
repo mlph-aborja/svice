@@ -63,6 +63,7 @@ class AuthController extends Controller
         
         return response([
             'user' => $user,
+            'roles' => [$role->name], 
             'access_token' => $accessToken
         ]);
     }
@@ -84,16 +85,6 @@ class AuthController extends Controller
     public function getAuthenticatedUserDetails()
     {
         return new UserResource(Auth::user());
-    }
-
-    /**
-     * Has User role
-     *
-     * @return bool
-     */
-    public function isUserEmpty(User $user): bool
-    {
-        return $user == null;
     }
     
 }
