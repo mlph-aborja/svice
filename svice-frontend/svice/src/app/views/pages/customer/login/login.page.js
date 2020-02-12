@@ -39,7 +39,7 @@ class CustomerLoginPage extends React.Component {
 		this.setState({
 			loading: true
 		});
-		login(this.formData, 'CUSTOMER').then(data => {
+		login(this.formData).then(data => {
 			if (data.message) {
 				this.setState({
 					loading: false,

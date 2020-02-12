@@ -1,9 +1,7 @@
 import Axios from 'axios';
 
-export const login = (params, role) => {
+export const login = (params) => {
 	const url = process.env.REACT_APP_API_ENDPOINT + '/login';
-
-	params['role'] = role;
 
 	return Axios.post(url, params)
 		.then(response => {
@@ -23,9 +21,7 @@ export const login = (params, role) => {
 };
 
 export const register = (params, role) => {
-	const url = process.env.REACT_APP_API_ENDPOINT + '/register';
-
-	params['role'] = role;
+	const url = process.env.REACT_APP_API_ENDPOINT + `/${role}/register`;
 
 	return Axios.post(url, params)
 		.then(response => response.data)

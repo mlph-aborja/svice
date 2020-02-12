@@ -37,7 +37,7 @@ class CustomerSignUpPage extends React.Component {
 			loading: true
 		});
 
-		register(this.formData, 'CUSTOMER').then(data => {
+		register(this.formData, 'customers').then(data => {
 			if (data.errors) {
 				this.setState({
 					loading: false,

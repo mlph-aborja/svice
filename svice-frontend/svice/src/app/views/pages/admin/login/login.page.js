@@ -40,7 +40,7 @@ class AdminLoginPage extends React.Component {
 		this.setState({
 			loading: true
 		});
-		login(this.formData, 'ADMIN').then(data => {
+		login(this.formData).then(data => {
 			if (data.message) {
 				this.setState({
 					loading: false,
