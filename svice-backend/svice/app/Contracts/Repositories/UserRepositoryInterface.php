@@ -25,11 +25,4 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
      * @return User
      */
     public function findByEmail(string $email): User;
-
-    /**
-     * @param $role
-     * @param $email
-     * @return User
-     */
-    public function findByRoleAndEmail(Role $role, string $email): User;
 }
