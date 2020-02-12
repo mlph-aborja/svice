@@ -3,21 +3,23 @@ import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import AuthUtil from '../../../util/auth.util';
-import { Button } from 'reactstrap';
+import { Button, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import './logout.css';
 
 class LogoutButton extends React.Component {
 	onLogout = () => {
 		this.props.logoutUser();
 		AuthUtil.destroyAuthenticatedUser();
-		// Redirect to admin profile page
-		this.props.history.push(this.props.redirectUrl);
 	};
 	render() {
 		return (
-			<Button className='btn-link logout-button' onClick={this.onLogout}>
+			<NavLink className='navbar-text' 
+				to={this.props.redirectUrl} 
+				onClick={this.onLogout} 
+				tag={Link}>
 				LOGOUT
-			</Button>
+			</NavLink>
 		);
 	}
 }

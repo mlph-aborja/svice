@@ -22,7 +22,7 @@ import {
 	CustomerSignUpPage
 } from './views/pages/customer';
 
-import { AdminLoginPage, AdminProfilePage } from './views/pages/admin';
+import { AdminLoginPage, AdminCustomersPage } from './views/pages/admin';
 const history = createBrowserHistory();
 
 const App = props => {
@@ -50,7 +50,17 @@ const App = props => {
 					<GuardedRoute
 						path='/admin/customers'
 						exact
-						render={props => <AdminProfilePage {...props} />}
+						render={props => <AdminCustomersPage {...props} />}
+					/>
+					<GuardedRoute
+						path='/admin/admins'
+						exact
+						render={props => <AdminCustomersPage {...props} />}
+					/>
+					<GuardedRoute
+						path='/admin/services'
+						exact
+						render={props => <AdminCustomersPage {...props} />}
 					/>
 					<GuardedRoute
 						path='/'

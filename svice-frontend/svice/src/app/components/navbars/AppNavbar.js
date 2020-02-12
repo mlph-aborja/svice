@@ -9,7 +9,12 @@ import {
 	NavItem,
 	Nav,
 	Container,
-	UncontrolledTooltip
+	UncontrolledTooltip,
+	NavLink,
+	UncontrolledDropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem
 } from 'reactstrap';
 
 import LogoutButton from '../buttons/logout/logout';
@@ -86,15 +91,41 @@ const AppNavbar = props => {
 								navbar
 							>
 								<Nav navbar>
-									{/* <NavItem>
-								<NavLink to='/index' tag={Link}>
-									Back to Kit
-								</NavLink>
-							</NavItem> */}
+								<NavItem>
+									<NavLink className='navbar-text' to='/admin/services' tag={Link}>
+										Services
+									</NavLink>
+								</NavItem>
+									<UncontrolledDropdown nav>
+										<DropdownToggle
+										className='navbar-text'
+										aria-haspopup={true}
+										caret
+										color="default"
+										data-toggle="dropdown"
+										href="#pablo"
+										id="navbarDropdownMenuLink"
+										nav
+										onClick={e => e.preventDefault()}
+										>
+										Users
+										</DropdownToggle>
+										<DropdownMenu aria-labelledby="navbarDropdownMenuLink">
+											<DropdownItem
+												to='/admin/admins' tag={Link}
+											>
+												Admin
+											</DropdownItem>
+											<DropdownItem
+												to='/admin/customers' tag={Link}
+											>
+												Customer
+											</DropdownItem>
+										</DropdownMenu>
+									</UncontrolledDropdown>
 									<NavItem>
 										<LogoutButton
 											redirectUrl='/admin/login'
-											history={props.history}
 										/>
 									</NavItem>
 								</Nav>

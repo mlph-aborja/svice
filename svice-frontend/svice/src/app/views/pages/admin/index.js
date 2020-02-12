@@ -1,4 +1,4 @@
 import AdminLoginPage from './login/login.page';
-import AdminProfilePage from './profile/profile.page';
+import AdminCustomersPage from './customers/customers.page';
 
-export { AdminLoginPage, AdminProfilePage };
+export { AdminLoginPage, AdminCustomersPage };
