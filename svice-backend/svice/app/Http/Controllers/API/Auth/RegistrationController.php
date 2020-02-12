@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\Auth;
 
+use Illuminate\Http\Request;
+use App\Eloquent\Models\Role;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Hash;
 use App\Contracts\Repositories\RoleRepositoryInterface;
 use App\Contracts\Repositories\UserRepositoryInterface;
-use App\Eloquent\Models\User;
-use App\Eloquent\Models\Role;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
 
 class RegistrationController extends Controller
 {
@@ -78,7 +79,7 @@ class RegistrationController extends Controller
      * @param Role $role
      * @return Response
      */
-    protected function register(Request $request, Role $role) : Response
+    protected function register(Request $request, Role $role): Response
     {
         $data = $request->validate(self::VALIDATION_RULES_USER_REGISTER);
         $data['password'] = Hash::make($request->password);
