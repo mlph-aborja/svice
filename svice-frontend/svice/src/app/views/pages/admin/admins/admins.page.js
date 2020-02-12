@@ -2,18 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
+import { Container, Button , Jumbotron} from 'reactstrap';
 
 class AdminAdminsPage extends Component {
 	render() {
 		return (
 			<div>
-				<br>
-				</br>
-				<br>
-				</br>
-				<br>
-				</br>
-				<h1>Admins PAGE</h1>
+				<Jumbotron>
+					<Container>
+					<h1 className="display-3">Hello, world!</h1>
+					<p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
+					<hr className="my-2" />
+					<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+					<p className="lead">
+					<Button color="primary">Learn More</Button>
+					</p>
+					</Container>
+					
+				</Jumbotron>
 			</div>
 		);
 	}
