@@ -17,13 +17,13 @@ const authGuard = (to, from, next) => {
 	if (AuthUtil.isAuthenticated()) {
 		if (url === '/admin/login') {
 			if (isAdmin()) {
-				next.redirect('/admin/profile');
+				next.redirect('/admin/customers');
 			} else {
 				next.redirect('/');
 			}
 		} else if (url === '/login') {
 			if (isAdmin()) {
-				next.redirect('/admin/profile');
+				next.redirect('/admin/customers');
 			} else {
 				next.redirect('/');
 			}

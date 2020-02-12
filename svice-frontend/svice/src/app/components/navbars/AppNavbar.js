@@ -60,7 +60,7 @@ const AppNavbar = props => {
 					>
 						<Container>
 							<div className='navbar-translate'>
-								<NavbarBrand to='/admin/profile' tag={Link} id='navbar-brand'>
+								<NavbarBrand to='/admin/customers' tag={Link} id='navbar-brand'>
 									<i className='now-ui-icons ui-2_settings-90 mr-2'></i> Svice
 								</NavbarBrand>
 								<UncontrolledTooltip target='#navbar-brand'>

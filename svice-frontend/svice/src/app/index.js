@@ -48,7 +48,7 @@ const App = props => {
 						render={props => <CustomerLoginPage {...props} />}
 					/>
 					<GuardedRoute
-						path='/admin/profile'
+						path='/admin/customers'
 						exact
 						render={props => <AdminProfilePage {...props} />}
 					/>
