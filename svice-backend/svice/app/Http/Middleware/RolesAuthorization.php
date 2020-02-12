@@ -18,18 +18,12 @@ class RolesAuthorization
      */
     public function handle($request, Closure $next)
     {
-
-        if (Auth::guest()) {
-            throw UnauthorizedException::notLoggedIn();
-        }
-
+        if (Auth::guest()) throw UnauthorizedException::notLoggedIn();
         // Authorize Admin Role
-        if (!$request->user()->role()->where('name', Role::ROLE_NAME_ADMIN)->exists()) {
+        if (!$request->user()->role()->where('name', Role::ROLE_NAME_ADMIN)->exists())
+        {
             throw UnauthorizedException::noPermission();
         }
-
-        // TODO: Handle other authorization
-
         return $next($request);
     }
 }

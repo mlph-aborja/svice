@@ -41,7 +41,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        // Check if user has valid credentials
+        // Check if user has invalid credentials
         if (!Auth::attempt($credentials))
         {
             throw UnauthorizedException::invalidCredentials();

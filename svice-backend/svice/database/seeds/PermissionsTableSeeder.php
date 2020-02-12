@@ -42,6 +42,7 @@ class PermissionsTableSeeder extends Seeder
                 }
             }
         }
+        // scope
         $admin = $this->roleRepository->adminRole();
         $admin->permissions()->sync($permission_ids);
     }

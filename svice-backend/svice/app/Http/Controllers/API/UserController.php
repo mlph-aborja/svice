@@ -61,7 +61,6 @@ class UserController extends Controller
         $this->roleRepository = $roleRepository;
     }
 
-    // TODO: Pagination
     public function index (Request $request)
     {
         return new UserResources($this->userRepository->all());
