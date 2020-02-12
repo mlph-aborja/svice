@@ -2,21 +2,23 @@ version: '3'
 
 networks:
   laravel:
+    driver: bridge
 volumes:
   mysqldata:
     driver: local
 
 services:
   nginx:
-    build:
-      context: .
-      dockerfile: ./cicd/nginx/Dockerfile
+    image: nginx:alpine
     container_name: svice-nginx
+    restart: unless-stopped
+    tty: true
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./:/app
+      - ./cicd/nginx/conf.d/:/etc/nginx/conf.d/
     depends_on:
       - php-fpm
     networks:

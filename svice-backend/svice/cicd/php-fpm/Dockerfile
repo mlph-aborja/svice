@@ -23,7 +23,7 @@ RUN apt-get update && \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 # to speed up the install process -> parallel download
-RUN composer global require hirak/prestissimo
+# RUN composer global require hirak/prestissimo
 
 RUN mkdir -p /app
 ADD . /app/
@@ -34,6 +34,6 @@ RUN composer update
 RUN composer install
 RUN chmod -R a+w storage/ bootstrap/cache
 
-RUN cp ./run.sh /tmp
-RUN chmod +x /tmp/run.sh
-ENTRYPOINT ["/tmp/run.sh"]
+# RUN cp ./run.sh /tmp
+# RUN chmod +x /tmp/run.sh
+# ENTRYPOINT ["/tmp/run.sh"]
