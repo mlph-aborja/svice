@@ -59,6 +59,6 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      */
     public function findByName(string $name): ?Role
     {
-         return $this->type::where([ "name" => $name ])->first();
+        return $this->type::where([ "name" => $name ])->first();
     }
 }
