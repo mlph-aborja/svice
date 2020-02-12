@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::prefix('admin')->group(function () {
         Route::apiResource("/users", 'API\UserController')
             ->middleware('role.permission');
+        Route::get("/admins", 'API\UserController@findAllAdmin')
+            ->middleware('role.permission');
+        Route::get("/customers", 'API\UserController@findAllCustomer')
+            ->middleware('role.permission');
         Route::put('/users/{userId}/{role}', 'API\UserController@assignRole')
             ->name('admin.users.assignRole');
     });
