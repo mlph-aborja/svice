@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
-import { Container, Button , Table, Jumbotron} from 'reactstrap';
+import { Container, Button , Table} from 'reactstrap';
 import { findAllAdmin } from '../../../../services/user.service';
 import { showAlert } from '../../../../actions/alert-box.action';
 
@@ -28,12 +28,19 @@ class AdminAdminsPage extends Component {
 			}
 		});
 	}
+
+	onRedirectTo(redirectUrl) {
+		this.props.history.push(redirectUrl);
+	}
 	
 	render() {
 		return (
 					<Container>
 						<h4 className="display-5 table-title">Admins</h4>
-						<Button color="success" className="pull-right"><i className='now-ui-icons ui-1_simple-add'></i></Button>
+						<Button 
+							color="success" 
+							className="pull-right"
+							onClick={() => this.onRedirectTo('/admin/admins/add')}><i className='now-ui-icons ui-1_simple-add'></i></Button>
 					<Table>
 						<thead>
 							<tr>

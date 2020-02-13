@@ -23,6 +23,8 @@ Route::post('/customers/register', 'API\Auth\RegistrationController@registerCust
     ->name('customer.register');
 Route::post('/service-providers/register', 'API\Auth\RegistrationController@registerServiceProvider')
     ->name('service-provider.register');
+Route::post('/admins/register', 'API\Auth\RegistrationController@registerAdmin')
+    ->name('admin.register');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/users/me', 'API\Auth\AuthController@getAuthenticatedUserDetails')
