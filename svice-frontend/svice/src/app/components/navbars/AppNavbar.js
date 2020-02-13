@@ -9,7 +9,12 @@ import {
 	NavItem,
 	Nav,
 	Container,
-	UncontrolledTooltip
+	UncontrolledTooltip,
+	NavLink,
+	UncontrolledDropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem
 } from 'reactstrap';
 
 import LogoutButton from '../buttons/logout/logout';
@@ -54,13 +59,13 @@ const AppNavbar = props => {
 						/>
 					) : null}
 					<Navbar
-						className={'fixed-top ' + navbarColor}
+						className={navbarColor}
 						color='info'
 						expand='lg'
 					>
 						<Container>
 							<div className='navbar-translate'>
-								<NavbarBrand to='/admin/profile' tag={Link} id='navbar-brand'>
+								<NavbarBrand to='/admin/customers' tag={Link} id='navbar-brand'>
 									<i className='now-ui-icons ui-2_settings-90 mr-2'></i> Svice
 								</NavbarBrand>
 								<UncontrolledTooltip target='#navbar-brand'>
@@ -86,15 +91,41 @@ const AppNavbar = props => {
 								navbar
 							>
 								<Nav navbar>
-									{/* <NavItem>
-								<NavLink to='/index' tag={Link}>
-									Back to Kit
-								</NavLink>
-							</NavItem> */}
+								<NavItem>
+									<NavLink className='navbar-text' to='/admin/services' tag={Link}>
+										Services
+									</NavLink>
+								</NavItem>
+									<UncontrolledDropdown nav>
+										<DropdownToggle
+										className='navbar-text'
+										aria-haspopup={true}
+										caret
+										color="default"
+										data-toggle="dropdown"
+										href="#pablo"
+										id="navbarDropdownMenuLink"
+										nav
+										onClick={e => e.preventDefault()}
+										>
+										Users
+										</DropdownToggle>
+										<DropdownMenu aria-labelledby="navbarDropdownMenuLink">
+											<DropdownItem
+												to='/admin/admins' tag={Link}
+											>
+												Admin
+											</DropdownItem>
+											<DropdownItem
+												to='/admin/customers' tag={Link}
+											>
+												Customer
+											</DropdownItem>
+										</DropdownMenu>
+									</UncontrolledDropdown>
 									<NavItem>
 										<LogoutButton
 											redirectUrl='/admin/login'
-											history={props.history}
 										/>
 									</NavItem>
 								</Nav>

@@ -62,7 +62,7 @@ class AdminLoginPage extends React.Component {
 				this.onAuthenticateUser(data);
 
 				// Redirect to admin profile page
-				this.props.history.push('/admin/profile');
+				this.props.history.push('/admin/customers');
 			}
 		});
 	};

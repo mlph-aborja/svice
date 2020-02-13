@@ -8,6 +8,10 @@ body {
 	font-size: 15px;
 }
 
+.navbar-text {
+	font-size: 15px !important;
+}
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
@@ -23,4 +27,12 @@ code {
 
 #navbar-brand {
 	font-size: x-large;
+}
+
+.table-title {
+	display: inline;
+}
+
+.text-white {
+	color: white;
 }

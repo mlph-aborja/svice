@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Profile from './profile';
+import AdminAdminsPage from './admins';
 
-describe('<Profile />', () => {
+describe('<AdminAdminsPage />', () => {
   test('renders', () => {
-    const wrapper = shallow(<Profile />);
+    const wrapper = shallow(<AdminAdminsPage />);
     expect(wrapper).toMatchSnapshot();
   });
 });

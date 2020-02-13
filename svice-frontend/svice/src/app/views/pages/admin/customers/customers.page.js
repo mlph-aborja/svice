@@ -3,18 +3,23 @@ import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
 
-class AdminProfilePage extends Component {
+class AdminCustomersPage extends Component {
 	render() {
 		return (
 			<div>
-				{' ' + this.props.isAuthenticated}
-				<br />
+				<br>
+				</br>
+				<br>
+				</br>
+				<br>
+				</br>
+				<h1>CUSTOMERS PAGE</h1>
 			</div>
 		);
 	}
 }
 
-AdminProfilePage.propTypes = {
+AdminCustomersPage.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
 	authenticated_user: PropTypes.object.isRequired,
 	access_token: PropTypes.string.isRequired,
@@ -28,5 +33,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { authenticateUser, logoutUser })(
-	AdminProfilePage
+	AdminCustomersPage
 );

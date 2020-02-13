@@ -37,3 +37,47 @@ export const getAuthenticatedUserDetails = params => {
 		.then(response => response.data)
 		.catch(error => error.response.data);
 };
+
+export const findAllAdmin = params => {
+	const url = process.env.REACT_APP_API_ENDPOINT + '/admin/admins';
+
+	return Axios.get(url, params)
+		.then(response => response.data)
+		.catch(error => error.response.data);
+}
+
+export const findAllCustomer = () => {
+	const url = process.env.REACT_APP_API_ENDPOINT + '/admin/customers';
+
+	return Axios.get(url)
+		.then(response => response.data)
+		.catch(error => error.response.data);
+}
+
+export const findByUserId = (id) => {
+	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
+
+	return Axios.get(url)
+		.then(response => response.data)
+		.catch(error => error.response.data);
+}
+
+export const updateUser = (params) => {
+	console.log(params);
+	// TODO
+	// const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${params.id}`;
+
+	// return Axios.get(url)
+	// 	.then(response => response.data)
+	// 	.catch(error => error.response.data);
+}
+
+export const deleteUserById = (id) => {
+	console.log(id);
+	// TODO
+	// const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${params.id}`;
+
+	// return Axios.get(url)
+	// 	.then(response => response.data)
+	// 	.catch(error => error.response.data);
+}

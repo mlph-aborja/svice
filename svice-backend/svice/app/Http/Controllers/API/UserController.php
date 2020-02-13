@@ -65,6 +65,24 @@ class UserController extends Controller
 
     /**
      * @param Request $request
+     * @return UserResources
+     */
+    public function findAllAdmin (Request $request)
+    {
+        return new UserResources($this->userRepository->findAllAdmin());
+    }
+
+    /**
+     * @param Request $request
+     * @return UserResources
+     */
+    public function findAllCustomer (Request $request)
+    {
+        return new UserResources($this->userRepository->findAllCustomer());
+    }
+
+    /**
+     * @param Request $request
      * @param int $userId
      * @return UserResource
      */

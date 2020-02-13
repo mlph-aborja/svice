@@ -5,6 +5,7 @@ namespace App\Contracts\Repositories;
 use App\Contracts\Repositories\BaseRepositoryInterface;
 use App\Eloquent\Models\Role;
 use App\Eloquent\User;
+use Illuminate\Database\Eloquent\Collection;
 
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {
@@ -27,9 +28,12 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function findByEmail(string $email): User;
 
     /**
-     * @param $role
-     * @param $email
-     * @return User
+     * @return Collection
      */
-    public function findByRoleAndEmail(Role $role, string $email): User;
+    public function findAllAdmin(): Collection;
+
+    /**
+     * @return Collection
+     */
+    public function findAllCustomer(): Collection;
 }

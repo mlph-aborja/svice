@@ -5,8 +5,8 @@ namespace App\Eloquent\Repositories;
 
 use App\Eloquent\User;
 use App\Eloquent\Models\Role;
-use App\Exceptions\BadRequest;
 use App\Contracts\Repositories\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -46,13 +46,18 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function findByRoleAndEmail(Role $role, string $email): User
+    public function findAllAdmin(): Collection
     {
-        $this->model = $this->type::where('email', $email)->where('role_id', $role->id)->first();
-        if ($this->model == null)
-        {
-            throw BadRequest::invalidRole($role->name);
-        }
-        return $this->model;
+        $role = Role::where('name', Role::ROLE_NAME_ADMIN)->first();
+        return $this->type::where('role_id', $role->id)->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAllCustomer(): Collection
+    {
+        $role = Role::where('name', Role::ROLE_NAME_CUSTOMER)->first();
+        return $this->type::where('role_id', $role->id)->get();
     }
 }

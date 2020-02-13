@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Eloquent\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Exceptions\BadRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,11 @@ class AuthController extends Controller
         $role = $this->roleRepository->findByName($request['role']);
 
         // Get Authenticated User
-        $user = $this->userRepository->findByRoleAndEmail($role, $credentials['email']);
+        $user = $this->userRepository->findByEmail($credentials['email']);
+
+        if (!$user->hasAnyRole($role->name)) {
+            throw BadRequest::invalidRole($role->name);
+        }
 
         // Create access token
         $accessToken = $user->createToken('authToken')->accessToken;
