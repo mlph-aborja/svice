@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import { Container, Button , Table} from 'reactstrap';
-import { findAllAdmin, deleteUserById } from '../../../../services/user.service';
+import { findAllAdmin } from '../../../../services/user.service';
 import { showAlert } from '../../../../actions/alert-box.action';
 
 class AdminAdminsPage extends Component {
@@ -14,12 +14,9 @@ class AdminAdminsPage extends Component {
 			...props,
 			datas: []
 		};
-		
 	}
 
 	componentDidMount() {
-		
-
 		findAllAdmin().then(data => {
 			if (data.message) {
 				// Show Alert
@@ -34,11 +31,6 @@ class AdminAdminsPage extends Component {
 
 	onRedirectTo(redirectUrl) {
 		this.props.history.push(redirectUrl);
-	}
-
-	onDelete(id) {
-		// Todo delete id
-		deleteUserById(id).then(data => console.log(data));
 	}
 	
 	render() {
@@ -65,11 +57,8 @@ class AdminAdminsPage extends Component {
 								<td>{value.last_name}</td>
 								<td>{value.email}</td>
 								<td>
-									<Button color="danger" onClick={() => this.onDelete(value.id)}><i className='now-ui-icons shopping_basket'></i></Button>
-									
-									<Button 
-									color="info"
-									onClick={() => this.onRedirectTo(`/admin/admins/update/${value.id}`)}><i className='now-ui-icons text_align-center'></i></Button>
+									<Button color="danger"><i className='now-ui-icons shopping_basket'></i></Button>
+									<Button color="info"><i className='now-ui-icons text_align-center'></i></Button>
 								</td>	
 								</tr>
 							})}
