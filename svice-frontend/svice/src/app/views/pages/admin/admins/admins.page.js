@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import { Container, Button , Table} from 'reactstrap';
-import { findAllAdmin } from '../../../../services/user.service';
+import { findAllAdmin, deleteUserById } from '../../../../services/user.service';
 import { showAlert } from '../../../../actions/alert-box.action';
 
 class AdminAdminsPage extends Component {
@@ -12,18 +12,19 @@ class AdminAdminsPage extends Component {
 		super(props);
 		this.state = {
 			...props,
-			datas: []
+			users: []
 		};
+		
 	}
 
 	componentDidMount() {
-		findAllAdmin().then(data => {
-			if (data.message) {
+		findAllAdmin().then(response => {
+			if (response.message) {
 				// Show Alert
-				this.props.showAlert(true, false, data.message);
+				this.props.showAlert(true, false, response.message);
 			} else {
 				this.setState({
-					datas: data.data.users || []
+					users: response.data.users || []
 				});
 			}
 		});
@@ -31,6 +32,24 @@ class AdminAdminsPage extends Component {
 
 	onRedirectTo(redirectUrl) {
 		this.props.history.push(redirectUrl);
+	}
+
+	onDelete(user) {
+		// Todo delete id
+		deleteUserById(user.id).then(response => {
+			if (response.error) {
+				this.props.showAlert(true, false, response.message);
+			} else {
+				const users = this.state.users;
+				const index = users.indexOf(user);
+				if (index > -1) {
+					users.splice(index, 1);
+				  this.setState({
+				  	users: users
+				  });
+				}
+			}
+		})
 	}
 	
 	render() {
@@ -51,14 +70,17 @@ class AdminAdminsPage extends Component {
 							</tr>
 						</thead>
 						<tbody>
-							{this.state.datas.map((value, index) => {
+							{this.state.users.map((value, index) => {
 								return <tr key={index}>
 								<td>{value.first_name}</td>
 								<td>{value.last_name}</td>
 								<td>{value.email}</td>
 								<td>
-									<Button color="danger"><i className='now-ui-icons shopping_basket'></i></Button>
-									<Button color="info"><i className='now-ui-icons text_align-center'></i></Button>
+									<Button color="danger" onClick={() => this.onDelete(value)}><i className='now-ui-icons shopping_basket'></i></Button>
+									
+									<Button 
+									color="info"
+									onClick={() => this.onRedirectTo(`/admin/admins/update/${value.id}`)}><i className='now-ui-icons text_align-center'></i></Button>
 								</td>	
 								</tr>
 							})}

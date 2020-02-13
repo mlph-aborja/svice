@@ -32,3 +32,7 @@ code {
 .table-title {
 	display: inline;
 }
+
+.text-white {
+	color: white;
+}
