@@ -53,3 +53,11 @@ export const findAllCustomer = () => {
 		.then(response => response.data)
 		.catch(error => error.response.data);
 }
+
+export const findByUserId = (id) => {
+	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
+
+	return Axios.get(url)
+		.then(response => response.data)
+		.catch(error => error.response.data);
+}

@@ -83,12 +83,13 @@ class AddUpdateForm extends Component {
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input
-                  name={field.name}
-                  placeholder={field.placeholder}
-                  type={field.type}
-                  onChange={event =>
-                    this.props.onInputChange(field.name, event.target.value)
-                  }
+					name={field.name}
+					placeholder={field.placeholder}
+					type={field.type}
+					value={field.value}
+					onChange={event =>
+						this.props.onInputChange(field.name, event.target.value)
+					}
                   onBlur={event => this.validate(field, event.target.value)}
                 ></Input>
               </InputGroup>

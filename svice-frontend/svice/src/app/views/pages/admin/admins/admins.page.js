@@ -14,9 +14,12 @@ class AdminAdminsPage extends Component {
 			...props,
 			datas: []
 		};
+		
 	}
 
 	componentDidMount() {
+		
+
 		findAllAdmin().then(data => {
 			if (data.message) {
 				// Show Alert
@@ -58,7 +61,10 @@ class AdminAdminsPage extends Component {
 								<td>{value.email}</td>
 								<td>
 									<Button color="danger"><i className='now-ui-icons shopping_basket'></i></Button>
-									<Button color="info"><i className='now-ui-icons text_align-center'></i></Button>
+									
+									<Button 
+									color="info"
+									onClick={() => this.onRedirectTo(`/admin/admins/update/${value.id}`)}><i className='now-ui-icons text_align-center'></i></Button>
 								</td>	
 								</tr>
 							})}
