@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Container, Button , Table, Col} from 'reactstrap';
 import { findAllAdmin } from '../../../../../services/user.service';
 import { showAlert } from '../../../../../actions/alert-box.action';
-import { register, findByUserId } from '../../../../../services/user.service';
+import { register, findByUserId, updateUser } from '../../../../../services/user.service';
 
 class AddUpdateAdminFormPage extends Component {
 	constructor(props) {
@@ -46,25 +46,40 @@ class AddUpdateAdminFormPage extends Component {
 			this.setState({
 				loading: true
 			});
-			
-			register(this.state.formData, 'admins').then(data => {
-				if (data.errors) {
-					this.setState({
-						loading: false,
-						errors: data.errors
-					});
+			const formData = this.state.formData;
 
-					this.props.showAlert(true, false, data.message);
-				} else {
-					this.setState({
-						loading: false,
-						errors: []
-					});
-					this.props.history.push('/admin/admins');
-					this.props.showAlert(true, true, 'You successfully add new Admin Account');
-				}
-			});
+			if (formData.id) {
+				this.onUpdate(formData);
+			} else {
+				this.onRegister(formData);
+			}
+			
 		};
+
+	onUpdate(formData) {
+		// TODO
+		updateUser(formData).then(data => console.log(data));
+	}
+
+	onRegister(formData) {
+		register(formData, 'admins').then(data => {
+			if (data.errors) {
+				this.setState({
+					loading: false,
+					errors: data.errors
+				});
+
+				this.props.showAlert(true, false, data.message);
+			} else {
+				this.setState({
+					loading: false,
+					errors: []
+				});
+				this.props.history.push('/admin/admins');
+				this.props.showAlert(true, true, 'You successfully add new Admin Account');
+			}
+		});
+	}
 
 	onInputChange = (name, value) => {
 		this.formData[name] = value;

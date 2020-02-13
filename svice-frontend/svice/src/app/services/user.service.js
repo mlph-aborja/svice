@@ -61,3 +61,13 @@ export const findByUserId = (id) => {
 		.then(response => response.data)
 		.catch(error => error.response.data);
 }
+
+export const updateUser = (params) => {
+	console.log(params);
+	// TODO
+	// const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${params.id}`;
+
+	// return Axios.get(url)
+	// 	.then(response => response.data)
+	// 	.catch(error => error.response.data);
+}
