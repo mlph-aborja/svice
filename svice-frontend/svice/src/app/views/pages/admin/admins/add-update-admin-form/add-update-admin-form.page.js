@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import { Container, Button , Table, Col} from 'reactstrap';
-import { findAllAdmin } from '../../../../../services/user.service';
 import { showAlert } from '../../../../../actions/alert-box.action';
 import { register, findByUserId, updateUser } from '../../../../../services/user.service';
 

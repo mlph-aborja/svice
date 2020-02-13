@@ -71,3 +71,13 @@ export const updateUser = (params) => {
 	// 	.then(response => response.data)
 	// 	.catch(error => error.response.data);
 }
+
+export const deleteUserById = (id) => {
+	console.log(id);
+	// TODO
+	// const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${params.id}`;
+
+	// return Axios.get(url)
+	// 	.then(response => response.data)
+	// 	.catch(error => error.response.data);
+}
