@@ -58,12 +58,17 @@ const App = props => {
 						render={props => <AdminCustomersPage {...props} />}
 					/>
 					<GuardedRoute
+						path='/admin/admins'
+						exact
+						render={props => <AdminAdminsPage {...props} />}
+					/>
+					<GuardedRoute
 						path='/admin/admins/add'
 						exact
 						render={props => <AddUpdateAdminFormPage {...props} />}
 					/>
 					<GuardedRoute
-						path='/admin/admins/update/:id'
+						path='/admin/admins/update'
 						exact
 						render={props => <AddUpdateAdminFormPage {...props} />}
 					/>
@@ -71,11 +76,6 @@ const App = props => {
 						path='/admin/services'
 						exact
 						render={props => <AdminServicesPage {...props} />}
-					/>
-					<GuardedRoute
-						path='/admin/admins'
-						exact
-						render={props => <AdminAdminsPage {...props} />}
 					/>
 					<GuardedRoute
 						path='/'
