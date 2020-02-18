@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../../actions/auth.action';
 import PropTypes from 'prop-types';
-import { Container, Button, Table } from 'reactstrap';
+import { Container, Table } from 'reactstrap';
 import { findAllAdmin, deleteUser } from '../../../../services/user.service';
 import { showAlert } from '../../../../actions/alert-box.action';
 import AddEntryButton from '../../../../components/buttons/add-entry-button/add-entry-button';

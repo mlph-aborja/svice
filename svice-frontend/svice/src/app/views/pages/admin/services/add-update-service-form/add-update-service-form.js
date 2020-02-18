@@ -11,7 +11,7 @@ import { findUserById } from '../../../../../services/user.service';
 import { showAlert } from '../../../../../actions/alert-box.action';
 import { register } from '../../../../../services/user.service';
 
-class AddUpdateAdminFormPage extends Component {
+class AddUpdateServiceForm extends Component {
 	constructor(props) {
 		super(props);
 		this.formData = {};
@@ -132,7 +132,7 @@ class AddUpdateAdminFormPage extends Component {
 	}
 }
 
-AddUpdateAdminFormPage.propTypes = {
+AddUpdateServiceForm.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
 	authenticated_user: PropTypes.object.isRequired,
 	access_token: PropTypes.string.isRequired,
@@ -158,4 +158,4 @@ export default connect(mapStateToProps, {
 	showAlert,
 	authenticateUser,
 	logoutUser
-})(AddUpdateAdminFormPage);
+})(AddUpdateServiceForm);
