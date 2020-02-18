@@ -18,7 +18,7 @@ import {
 } from 'reactstrap';
 
 class AddUpdateForm extends Component {
-  constructor(props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			...props
@@ -51,9 +51,9 @@ class AddUpdateForm extends Component {
 		return {
 			errors: nextProps.errors
 		};
-  }
-  
-  showSpinner = () => {
+	}
+
+	showSpinner = () => {
 		if (this.props.loading) {
 			return (
 				<Spinner
@@ -66,55 +66,58 @@ class AddUpdateForm extends Component {
 		}
 	};
 
-  render() {
-    return <Card className='card-login card-plain'>
-    <Form action='' className='form' method=''>
-      <CardBody>
-        {this.props.fields.map((field, index) => {
-          return (
-            <FormGroup
-              key={index}
-              className={'no-border ' + this.state[field.name]}
-            >
-              <InputGroup className='m-0'>
-                <InputGroupAddon addonType='prepend'>
-                  <InputGroupText>
-                    <i className={'now-ui-icons mr-2 ' + field.icon}></i>
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  name={field.name}
-                  placeholder={field.placeholder}
-                  type={field.type}
-                  onChange={event =>
-                    this.props.onInputChange(field.name, event.target.value)
-                  }
-                  onBlur={event => this.validate(field, event.target.value)}
-                ></Input>
-              </InputGroup>
-              <FormText className='text-center text-danger error-text'>
-                {this.state.errors[field.name]}
-              </FormText>
-            </FormGroup>
-          );
-        })}
-      </CardBody>
-      <CardFooter className='text-center'>
-        <ButtonToolbar></ButtonToolbar>
-        <Button
-          block
-          className='btn-round'
-          color='info'
-          onClick={e => this.props.onSubmit(e)}
-          size='lg'
-        >
-          {this.showSpinner()}
-          Save
-        </Button>
-      </CardFooter>
-    </Form>
-  </Card>;
-  }
+	render() {
+		return (
+			<Card className='card-login card-plain'>
+				<Form action='' className='form' method=''>
+					<CardBody>
+						{this.props.fields.map((field, index) => {
+							return (
+								<FormGroup
+									key={index}
+									className={'no-border ' + this.state[field.name]}
+								>
+									<InputGroup className='m-0'>
+										<InputGroupAddon addonType='prepend'>
+											<InputGroupText>
+												<i className={'now-ui-icons mr-2 ' + field.icon}></i>
+											</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											name={field.name}
+											placeholder={field.placeholder}
+											value={field.value}
+											type={field.type}
+											onChange={event =>
+												this.props.onInputChange(field.name, event.target.value)
+											}
+											onBlur={event => this.validate(field, event.target.value)}
+										></Input>
+									</InputGroup>
+									<FormText className='text-center text-danger error-text'>
+										{this.state.errors[field.name]}
+									</FormText>
+								</FormGroup>
+							);
+						})}
+					</CardBody>
+					<CardFooter className='text-center'>
+						<ButtonToolbar></ButtonToolbar>
+						<Button
+							block
+							className='btn-round'
+							color='info'
+							onClick={e => this.props.onSubmit(e)}
+							size='lg'
+						>
+							{this.showSpinner()}
+							Save
+						</Button>
+					</CardFooter>
+				</Form>
+			</Card>
+		);
+	}
 }
 
 export default AddUpdateForm;

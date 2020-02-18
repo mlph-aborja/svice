@@ -44,7 +44,7 @@ export const findAllAdmin = params => {
 	return Axios.get(url, params)
 		.then(response => response.data)
 		.catch(error => error.response.data);
-}
+};
 
 export const findAllCustomer = () => {
 	const url = process.env.REACT_APP_API_ENDPOINT + '/admin/customers';
@@ -52,4 +52,18 @@ export const findAllCustomer = () => {
 	return Axios.get(url)
 		.then(response => response.data)
 		.catch(error => error.response.data);
-}
+};
+
+export const findUserById = id => {
+	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
+
+	return Axios.get(url)
+		.then(response => response.data)
+		.catch(error => error.response.data);
+};
+
+export const deleteUser = id => {
+	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
+
+	return Axios.delete(url);
+};

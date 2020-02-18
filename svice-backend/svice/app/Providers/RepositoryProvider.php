@@ -2,14 +2,16 @@
 
 namespace App\Providers;
 
-use App\Contracts\Repositories\PermissionRepositoryInterface;
-use App\Contracts\Repositories\RoleRepositoryInterface;
-use App\Contracts\Repositories\UserRepositoryInterface;
-use App\Eloquent\Repositories\PermissionRepository;
+use function foo\func;
+use Illuminate\Support\ServiceProvider;
 use App\Eloquent\Repositories\RoleRepository;
 use App\Eloquent\Repositories\UserRepository;
-use Illuminate\Support\ServiceProvider;
-use function foo\func;
+use App\Eloquent\Repositories\ServiceRepository;
+use App\Eloquent\Repositories\PermissionRepository;
+use App\Contracts\Repositories\RoleRepositoryInterface;
+use App\Contracts\Repositories\UserRepositoryInterface;
+use App\Contracts\Repositories\ServiceRepositoryInterface;
+use App\Contracts\Repositories\PermissionRepositoryInterface;
 
 class RepositoryProvider extends ServiceProvider
 {
@@ -28,6 +30,9 @@ class RepositoryProvider extends ServiceProvider
         });
         $this->app->singleton(PermissionRepositoryInterface::class, function () {
             return new PermissionRepository();
+        });
+        $this->app->singleton(ServiceRepositoryInterface::class, function () {
+            return new ServiceRepository();
         });
     }
 }

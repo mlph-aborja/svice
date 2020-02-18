@@ -3,6 +3,7 @@
 namespace App\Eloquent;
 
 use App\Eloquent\Models\Role;
+use App\Eloquent\Models\Service;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
@@ -58,7 +59,17 @@ class User extends Authenticatable
      * @param string $role
      * @return bolen
      */
-    public function hasAnyRole(string $role) {
+    public function hasAnyRole(string $role)
+    {
         return null !== $this->role()->where('name', $role)->first();
+    }
+
+    /**
+     * Get the services owned by user.
+     *  @return HasMany
+     */
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 }

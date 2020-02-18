@@ -8,6 +8,7 @@ import '../assets/scss/now-ui-kit.scss';
 import '../assets/demo/demo.css';
 import '../assets/demo/nucleo-icons-page-styles.css';
 import '../../src/index.css';
+import '../assets/fontawesome-free-5.12.1-web/css/all.min.css';
 
 import { GuardProvider, GuardedRoute } from 'react-router-guards';
 import AlertBox from './components/alert-box';
@@ -22,12 +23,13 @@ import {
 	CustomerSignUpPage
 } from './views/pages/customer';
 
-import { 
-	AdminLoginPage, 
+import {
+	AdminLoginPage,
 	AdminCustomersPage,
 	AdminAdminsPage,
 	AdminServicesPage,
-	AddUpdateAdminFormPage } from './views/pages/admin';
+	AddUpdateAdminFormPage
+} from './views/pages/admin';
 const history = createBrowserHistory();
 
 const App = props => {
@@ -68,8 +70,7 @@ const App = props => {
 						render={props => <AddUpdateAdminFormPage {...props} />}
 					/>
 					<GuardedRoute
-						path='/admin/admins/update'
-						exact
+						path='/admin/admins/edit/:id'
 						render={props => <AddUpdateAdminFormPage {...props} />}
 					/>
 					<GuardedRoute
