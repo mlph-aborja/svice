@@ -51,14 +51,15 @@ class UserController extends Controller
         "deleted_at"
     ];
 
-    public function __construct(UserRepositoryInterface $userRepository,
-                                RoleRepositoryInterface $roleRepository)
-    {
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        RoleRepositoryInterface $roleRepository
+    ) {
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
     }
 
-    public function index (Request $request)
+    public function index(Request $request)
     {
         return new UserResources($this->userRepository->all());
     }
@@ -67,7 +68,7 @@ class UserController extends Controller
      * @param Request $request
      * @return UserResources
      */
-    public function findAllAdmin (Request $request)
+    public function findAllAdmin(Request $request)
     {
         return new UserResources($this->userRepository->findAllAdmin());
     }
@@ -76,7 +77,7 @@ class UserController extends Controller
      * @param Request $request
      * @return UserResources
      */
-    public function findAllCustomer (Request $request)
+    public function findAllCustomer(Request $request)
     {
         return new UserResources($this->userRepository->findAllCustomer());
     }
@@ -86,7 +87,7 @@ class UserController extends Controller
      * @param int $userId
      * @return UserResource
      */
-    public function show (Request $request, int $userId)
+    public function show(Request $request, int $userId)
     {
         return new UserResource($this->userRepository->find($userId));
     }
@@ -96,7 +97,7 @@ class UserController extends Controller
      * @param int $userId
      * @return UserResource
      */
-    public function update (Request $request, int $userId)
+    public function update(Request $request, int $userId)
     {
         $input = $this->ignoringParameters($request->validate(self::VALIDATION_RULES_USER_EXISTING));
         $user = $this->userRepository->findAndUpdate($userId, $input);
@@ -108,17 +109,17 @@ class UserController extends Controller
      * @param int $userId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy (Request $request, int $userId)
+    public function destroy(Request $request, int $userId)
     {
         $this->userRepository->findAndDelete($userId);
-        return response()->json(["message" => 'DELETED USER'], HttpResponse::HTTP_NO_CONTENT);
+        return response()->json(["message" => 'Successfully deleted'], HttpResponse::HTTP_OK);
     }
 
     /**
      * @param Request $request
      * @return UserResource
      */
-    public function store (Request $request)
+    public function store(Request $request)
     {
         $input = $this->ignoringParameters($request->validate(self::VALIDATION_RULES_USER_NEW));
         $input['password'] = Hash::make("password");
@@ -126,10 +127,9 @@ class UserController extends Controller
         return new UserResource($this->userRepository->create($input));
     }
 
-    protected function ignoringParameters ($param)
+    protected function ignoringParameters($param)
     {
-        foreach (self::IGNORE_PARAMETERS as $name)
-        {
+        foreach (self::IGNORE_PARAMETERS as $name) {
             unset($param[$name]);
         }
         return $param;
@@ -142,10 +142,10 @@ class UserController extends Controller
      * @param $roleName
      * @return \Illuminate\Http\JsonResponse
      */
-    public function assignRole (Request $request, $userId, $roleName)
+    public function assignRole(Request $request, $userId, $roleName)
     {
         $role = $this->roleRepository->findByName(strtoupper($roleName));
-        
+
         return new UserResource($this->userRepository->assignRole($userId, $role));
     }
 }

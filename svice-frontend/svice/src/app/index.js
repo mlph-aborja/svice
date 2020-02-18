@@ -8,6 +8,7 @@ import '../assets/scss/now-ui-kit.scss';
 import '../assets/demo/demo.css';
 import '../assets/demo/nucleo-icons-page-styles.css';
 import '../../src/index.css';
+import '../assets/fontawesome-free-5.12.1-web/css/all.min.css';
 
 import { GuardProvider, GuardedRoute } from 'react-router-guards';
 import AlertBox from './components/alert-box';
