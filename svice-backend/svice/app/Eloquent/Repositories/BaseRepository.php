@@ -23,7 +23,7 @@ class BaseRepository implements BaseRepositoryInterface
     /**
      * @return string
      */
-    public function getModelClassName () : string
+    public function getModelClassName(): string
     {
         return $this->type;
     }
@@ -64,12 +64,10 @@ class BaseRepository implements BaseRepositoryInterface
     /**
      * @param array $attributes
      */
-    private function save (Model $model, array $attributes): Model
+    private function save(Model $model, array $attributes): Model
     {
-        foreach ($model->getFillable() as $column)
-        {
-            if (array_key_exists($column, $attributes))
-            {
+        foreach ($model->getFillable() as $column) {
+            if (array_key_exists($column, $attributes)) {
                 $model->$column = array_get($attributes, $column);
             }
         }

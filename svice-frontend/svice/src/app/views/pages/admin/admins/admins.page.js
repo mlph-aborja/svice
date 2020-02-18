@@ -7,6 +7,7 @@ import { findAllAdmin, deleteUser } from '../../../../services/user.service';
 import { showAlert } from '../../../../actions/alert-box.action';
 import AddEntryButton from '../../../../components/buttons/add-entry-button/add-entry-button';
 import DeleteEntryButton from '../../../../components/buttons/delete-entry-button/delete-entry-button';
+import EditEntryButton from '../../../../components/buttons/edit-entry-button/edit-entry-button';
 
 class AdminAdminsPage extends Component {
 	constructor(props) {
@@ -71,9 +72,10 @@ class AdminAdminsPage extends Component {
 											userId={value.id}
 											onClick={() => this.onDelete(value.id)}
 										/>
-										<Button color='info'>
-											<i className='fas fa-edit'></i>
-										</Button>
+										<EditEntryButton
+											history={this.props.history}
+											redirectUrl={'/admin/admins/edit/' + value.id}
+										/>
 									</td>
 								</tr>
 							);

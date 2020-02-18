@@ -54,6 +54,14 @@ export const findAllCustomer = () => {
 		.catch(error => error.response.data);
 };
 
+export const findUserById = id => {
+	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
+
+	return Axios.get(url)
+		.then(response => response.data)
+		.catch(error => error.response.data);
+};
+
 export const deleteUser = id => {
 	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
 

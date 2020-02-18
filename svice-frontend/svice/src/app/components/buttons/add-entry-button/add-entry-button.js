@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 
 const AddEntryButton = props => {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.props = { ...props };
-	// }
-
 	const onRedirectTo = () => {
 		props.history.push(props.redirectUrl);
 	};
