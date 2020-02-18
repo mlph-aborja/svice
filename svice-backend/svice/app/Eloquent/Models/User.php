@@ -3,7 +3,7 @@
 namespace App\Eloquent;
 
 use App\Eloquent\Models\Role;
-use App\Service;
+use App\Eloquent\Models\Service;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;

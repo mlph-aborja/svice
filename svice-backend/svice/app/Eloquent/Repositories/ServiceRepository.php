@@ -4,7 +4,7 @@
 namespace App\Eloquent\Repositories;
 
 use App\Contracts\Repositories\ServiceRepositoryInterface;
-use App\Service;
+use App\Eloquent\Models\Service;
 
 class ServiceRepository extends BaseRepository implements ServiceRepositoryInterface
 {

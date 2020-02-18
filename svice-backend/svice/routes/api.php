@@ -26,12 +26,14 @@ Route::post('/service-providers/register', 'API\Auth\RegistrationController@regi
 Route::post('/admins/register', 'API\Auth\RegistrationController@registerAdmin')
     ->name('admin.register');
 
-Route::group(['middleware' => 'auth:api'], function(){
+Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/users/me', 'API\Auth\AuthController@getAuthenticatedUserDetails')
         ->name('users.me');
 
     Route::prefix('admin')->group(function () {
         Route::apiResource("/users", 'API\UserController')
+            ->middleware('role.permission');
+        Route::apiResource("/services", 'API\ServiceController')
             ->middleware('role.permission');
         Route::get("/admins", 'API\UserController@findAllAdmin')
             ->middleware('role.permission');
