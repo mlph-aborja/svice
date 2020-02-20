@@ -1,39 +1,38 @@
 FROM php:7.2-fpm
-
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update && \
-    apt-get install -y \
-    libfreetype6-dev \
-    libwebp-dev \
-    libjpeg62-turbo-dev \
+# Copy composer.lock and composer.json
+COPY composer.lock composer.json /var/www/
+# Set working directory
+WORKDIR /var/www
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
     libpng-dev \
-    nano \
-    vim \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
     zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
     unzip \
-    libgmp-dev \
-    libldap2-dev \
-    netcat \
-    sqlite3 \
-    cron \
-    libsqlite3-dev && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-webp-dir=/usr/include/  --with-jpeg-dir=/usr/include/ && \
-    docker-php-ext-install gd pdo pdo_mysql pdo_sqlite zip gmp bcmath pcntl ldap sysvmsg exif
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-# to speed up the install process -> parallel download
-# RUN composer global require hirak/prestissimo
-
-RUN mkdir -p /app
-ADD . /app/
-
-WORKDIR /app
-
-RUN composer update
-RUN composer install
-RUN chmod -R a+w storage/ bootstrap/cache
-
-# RUN cp ./run.sh /tmp
-# RUN chmod +x /tmp/run.sh
-# ENTRYPOINT ["/tmp/run.sh"]
+    git \
+    curl
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+# Copy existing application directory contents
+COPY . /var/www
+# Copy existing application directory permissions
+COPY --chown=www:www . /var/www
+# Change current user to www
+USER www
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]
