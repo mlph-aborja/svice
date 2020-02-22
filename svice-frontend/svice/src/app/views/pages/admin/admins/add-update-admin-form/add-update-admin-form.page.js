@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
 import { findUserById } from '../../../../../services/user.service';
 import { showAlert } from '../../../../../actions/alert-box.action';
-import { register } from '../../../../../services/user.service';
+import { register, updateUser } from '../../../../../services/user.service';
 
 class AddUpdateAdminFormPage extends Component {
 	constructor(props) {
@@ -23,7 +23,7 @@ class AddUpdateAdminFormPage extends Component {
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const id = this.props.match.params.id;
 		if (id) {
 			findUserById(id).then(data => {
@@ -41,34 +41,65 @@ class AddUpdateAdminFormPage extends Component {
 			loading: true
 		});
 
-		register(this.state.formData, 'admins').then(data => {
-			if (data.errors) {
-				this.setState({
-					loading: false,
-					errors: data.errors
-				});
-
-				this.props.showAlert(true, false, data.message);
-			} else {
-				this.setState({
-					loading: false,
-					errors: []
-				});
-				this.props.history.push('/admin/admins');
-				this.props.showAlert(
-					true,
-					true,
-					'You successfully add new Admin Account'
-				);
-			}
-		});
+		this.onActualSaving();
 	};
+
+	onActualSaving() {
+		const id = this.props.match.params.id;
+
+		if (id) {
+			updateUser(this.state.formData, id).then(data => {
+				if (data.errors) {
+					this.setState({
+						loading: false,
+						errors: data.errors
+					});
+
+					this.props.showAlert(true, false, data.message);
+				} else {
+					this.setState({
+						loading: false,
+						errors: []
+					});
+					this.props.history.push('/admin/admins');
+					this.props.showAlert(
+						true,
+						true,
+						'You successfully updated Admin Account'
+					);
+				}
+			});
+		} else {
+			register(this.state.formData, 'admins').then(data => {
+				if (data.errors) {
+					this.setState({
+						loading: false,
+						errors: data.errors
+					});
+
+					this.props.showAlert(true, false, data.message);
+				} else {
+					this.setState({
+						loading: false,
+						errors: []
+					});
+					this.props.history.push('/admin/admins');
+					this.props.showAlert(
+						true,
+						true,
+						'You successfully add new Admin Account'
+					);
+				}
+			});
+		}
+	}
 
 	onInputChange = (name, value) => {
 		this.formData[name] = value;
 		this.setState({
 			formData: this.formData
 		});
+		console.log(this.formData);
 	};
 
 	componentWillUnmount() {

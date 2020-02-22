@@ -21,6 +21,10 @@ class AdminCustomersPage extends Component {
 		this.onFetchCustomer();
 	}
 
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
+
 	onDelete(id) {
 		deleteUser(id).then(data => {
 			if (data.status === 200) {
@@ -69,7 +73,7 @@ class AdminCustomersPage extends Component {
 										/>
 										<EditEntryButton
 											history={this.props.history}
-											redirectUrl={'/admin/admins/edit/' + value.id}
+											redirectUrl={'/admin/customers/edit/' + value.id}
 										/>
 									</td>
 								</tr>
@@ -95,9 +99,9 @@ AdminCustomersPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	authenticated_user: state.auth.authenticated_user,
-	access_token: state.auth.access_token,
-	isAuthenticated: state.auth.isAuthenticated,
+	alert: state.alertBox.show,
+	success: state.alertBox.success,
+	message: state.alertBox.message,
 
 	authenticated_user: state.auth.authenticated_user,
 	access_token: state.auth.access_token,

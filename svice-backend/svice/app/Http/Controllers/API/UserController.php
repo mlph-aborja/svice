@@ -30,19 +30,14 @@ class UserController extends Controller
     const VALIDATION_RULES_USER_NEW = [
         'first_name' => 'required',
         'last_name' => 'required',
-        'email' => 'email|required|unique:users'
-    ];
-
-    const VALIDATION_RULES_USER_EXISTING = [
-        'email' => 'email|unique:users'
+        'email' => 'email|required|unique:users',
+        'password' => 'required|confirmed',
     ];
 
     /**
      * Parameter names that are ignored
      */
     const IGNORE_PARAMETERS = [
-        "password",
-        "password_confirmation",
         "id",
         "email_verified_at",
         "created_at",
@@ -99,7 +94,9 @@ class UserController extends Controller
      */
     public function update(Request $request, int $userId)
     {
-        $input = $this->ignoringParameters($request->validate(self::VALIDATION_RULES_USER_EXISTING));
+        $input = $this->ignoringParameters($request->validate(self::VALIDATION_RULES_USER_NEW));
+        $input['password'] = Hash::make("password");
+
         $user = $this->userRepository->findAndUpdate($userId, $input);
         return new UserResource($user);
     }

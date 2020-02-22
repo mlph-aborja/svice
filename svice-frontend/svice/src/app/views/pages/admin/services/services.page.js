@@ -25,6 +25,10 @@ class AdminServicesPage extends Component {
 		this.onFetchService();
 	}
 
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
+
 	onDelete(id) {
 		deleteService(id).then(data => {
 			if (data.status === 200) {
@@ -40,7 +44,7 @@ class AdminServicesPage extends Component {
 				this.props.showAlert(true, false, data.message);
 			} else {
 				this.setState({
-					data: data.data.users || []
+					data: data.data.services || []
 				});
 			}
 		});
@@ -52,7 +56,7 @@ class AdminServicesPage extends Component {
 				<h4 className='display-5 table-title'>Services</h4>
 				<AddEntryButton
 					history={this.props.history}
-					redirectUrl='/admin/admins/add'
+					redirectUrl='/admin/services/add'
 				/>
 				<Table>
 					<thead>
@@ -68,12 +72,11 @@ class AdminServicesPage extends Component {
 									<td>{value.name}</td>
 									<td>
 										<DeleteEntryButton
-											userId={value.id}
 											onClick={() => this.onDelete(value.id)}
 										/>
 										<EditEntryButton
 											history={this.props.history}
-											redirectUrl={'/admin/admins/edit/' + value.id}
+											redirectUrl={'/admin/services/edit/' + value.id}
 										/>
 									</td>
 								</tr>
@@ -99,9 +102,9 @@ AdminServicesPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	authenticated_user: state.auth.authenticated_user,
-	access_token: state.auth.access_token,
-	isAuthenticated: state.auth.isAuthenticated,
+	alert: state.alertBox.show,
+	success: state.alertBox.success,
+	message: state.alertBox.message,
 
 	authenticated_user: state.auth.authenticated_user,
 	access_token: state.auth.access_token,
