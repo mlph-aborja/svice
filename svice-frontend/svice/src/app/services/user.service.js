@@ -69,7 +69,6 @@ export const deleteUser = id => {
 };
 
 export const updateUser = (params, id) => {
-	console.log(params);
 	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
 
 	return Axios.put(url, params)
