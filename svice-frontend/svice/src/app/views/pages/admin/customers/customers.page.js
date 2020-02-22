@@ -95,9 +95,9 @@ AdminCustomersPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	authenticated_user: state.auth.authenticated_user,
-	access_token: state.auth.access_token,
-	isAuthenticated: state.auth.isAuthenticated,
+	alert: state.alertBox.show,
+	success: state.alertBox.success,
+	message: state.alertBox.message,
 
 	authenticated_user: state.auth.authenticated_user,
 	access_token: state.auth.access_token,

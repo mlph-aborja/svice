@@ -7,9 +7,12 @@ import {
 } from '../../../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
-import { findUserById } from '../../../../../services/user.service';
+import {
+	findServiceById,
+	saveService,
+	updateService
+} from '../../../../../services/service.service';
 import { showAlert } from '../../../../../actions/alert-box.action';
-import { register } from '../../../../../services/user.service';
 
 class AddUpdateServiceForm extends Component {
 	constructor(props) {
@@ -26,11 +29,11 @@ class AddUpdateServiceForm extends Component {
 	componentWillMount() {
 		const id = this.props.match.params.id;
 		if (id) {
-			findUserById(id).then(data => {
+			findServiceById(id).then(data => {
 				this.setState({
-					formData: data.data.user
+					formData: data.data.service
 				});
-				this.formData = data.data.user;
+				this.formData = data.data.service;
 			});
 		}
 	}
@@ -41,28 +44,50 @@ class AddUpdateServiceForm extends Component {
 			loading: true
 		});
 
-		register(this.state.formData, 'admins').then(data => {
-			if (data.errors) {
-				this.setState({
-					loading: false,
-					errors: data.errors
-				});
-
-				this.props.showAlert(true, false, data.message);
-			} else {
-				this.setState({
-					loading: false,
-					errors: []
-				});
-				this.props.history.push('/admin/admins');
-				this.props.showAlert(
-					true,
-					true,
-					'You successfully add new Admin Account'
-				);
-			}
-		});
+		this.onActualSaving();
 	};
+
+	onActualSaving() {
+		const id = this.props.match.params.id;
+
+		if (id) {
+			updateService(this.state.formData, id).then(data => {
+				if (data.errors) {
+					this.setState({
+						loading: false,
+						errors: data.errors
+					});
+
+					this.props.showAlert(true, false, data.message);
+				} else {
+					this.setState({
+						loading: false,
+						errors: []
+					});
+					this.props.history.push('/admin/services');
+					this.props.showAlert(true, true, 'You successfully updated Service');
+				}
+			});
+		} else {
+			saveService(this.state.formData, 'admins').then(data => {
+				if (data.errors) {
+					this.setState({
+						loading: false,
+						errors: data.errors
+					});
+
+					this.props.showAlert(true, false, data.message);
+				} else {
+					this.setState({
+						loading: false,
+						errors: []
+					});
+					this.props.history.push('/admin/services');
+					this.props.showAlert(true, true, 'You successfully add new Service');
+				}
+			});
+		}
+	}
 
 	onInputChange = (name, value) => {
 		this.formData[name] = value;
@@ -79,47 +104,17 @@ class AddUpdateServiceForm extends Component {
 		const fields = [
 			{
 				required: true,
-				name: 'first_name',
+				name: 'name',
 				type: 'text',
-				placeholder: 'First Name',
-				icon: 'users_circle-08',
-				value: this.state.formData.first_name || ''
-			},
-			{
-				required: true,
-				name: 'last_name',
-				type: 'text',
-				placeholder: 'Last Name',
-				icon: 'users_circle-08',
-				value: this.state.formData.last_name || ''
-			},
-			{
-				required: true,
-				name: 'email',
-				type: 'email',
-				placeholder: 'Email',
-				icon: 'ui-1_email-85',
-				value: this.state.formData.email || ''
-			},
-			{
-				required: true,
-				name: 'password',
-				type: 'password',
-				placeholder: 'Password',
-				icon: 'ui-1_lock-circle-open'
-			},
-			{
-				required: true,
-				name: 'password_confirmation',
-				type: 'password',
-				placeholder: 'Password Confirmation',
-				icon: 'ui-1_lock-circle-open'
+				placeholder: 'name',
+				icon: 'far fa-file-alt',
+				value: this.state.formData.name || ''
 			}
 		];
 
 		return (
 			<Container>
-				<h4 className='display-5 table-title'>Admins</h4>
+				<h4 className='display-5 table-title'>Services</h4>
 				<AddUpdateForm
 					fields={fields}
 					errors={this.state.errors}

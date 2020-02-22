@@ -67,3 +67,12 @@ export const deleteUser = id => {
 
 	return Axios.delete(url);
 };
+
+export const updateUser = (params, id) => {
+	console.log(params);
+	const url = process.env.REACT_APP_API_ENDPOINT + `/admin/users/${id}`;
+
+	return Axios.put(url, params)
+		.then(response => response.data)
+		.catch(error => error.response.data);
+};
