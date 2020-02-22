@@ -22,6 +22,10 @@ class AdminAdminsPage extends Component {
 		this.onFetchAdmin();
 	}
 
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
+
 	onDelete(id) {
 		deleteUser(id).then(data => {
 			if (data.status === 200) {

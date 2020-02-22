@@ -23,7 +23,7 @@ class AddUpdateAdminFormPage extends Component {
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const id = this.props.match.params.id;
 		if (id) {
 			findUserById(id).then(data => {

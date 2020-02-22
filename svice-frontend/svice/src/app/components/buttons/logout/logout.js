@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { authenticateUser, logoutUser } from '../../../actions/auth.action';
 import PropTypes from 'prop-types';
 import AuthUtil from '../../../util/auth.util';
-import { Button, NavLink } from 'reactstrap';
+import { NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './logout.css';
 
@@ -14,10 +14,12 @@ class LogoutButton extends React.Component {
 	};
 	render() {
 		return (
-			<NavLink className='navbar-text' 
-				to={this.props.redirectUrl} 
-				onClick={this.onLogout} 
-				tag={Link}>
+			<NavLink
+				className='navbar-text'
+				to={this.props.redirectUrl}
+				onClick={this.onLogout}
+				tag={Link}
+			>
 				LOGOUT
 			</NavLink>
 		);

@@ -25,6 +25,10 @@ class AdminServicesPage extends Component {
 		this.onFetchService();
 	}
 
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
+
 	onDelete(id) {
 		deleteService(id).then(data => {
 			if (data.status === 200) {

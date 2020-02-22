@@ -99,7 +99,6 @@ class UpdateCustomerForm extends Component {
 		this.setState({
 			formData: this.formData
 		});
-		console.log(this.formData);
 	};
 
 	componentWillUnmount() {

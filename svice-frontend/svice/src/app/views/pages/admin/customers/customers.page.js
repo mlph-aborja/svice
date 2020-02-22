@@ -21,6 +21,10 @@ class AdminCustomersPage extends Component {
 		this.onFetchCustomer();
 	}
 
+	componentWillUnmount() {
+		this.props.showAlert(false, false, '');
+	}
+
 	onDelete(id) {
 		deleteUser(id).then(data => {
 			if (data.status === 200) {
