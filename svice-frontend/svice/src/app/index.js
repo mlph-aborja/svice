@@ -29,7 +29,8 @@ import {
 	AdminAdminsPage,
 	AdminServicesPage,
 	AddUpdateAdminFormPage,
-	AddUpdateServiceForm
+	AddUpdateServiceForm,
+	UpdateCustomerForm
 } from './views/pages/admin';
 const history = createBrowserHistory();
 
@@ -59,6 +60,16 @@ const App = props => {
 						path='/admin/customers'
 						exact
 						render={props => <AdminCustomersPage {...props} />}
+					/>
+					<GuardedRoute
+						path='/admin/customers/add'
+						exact
+						render={props => <UpdateCustomerForm {...props} />}
+					/>
+					<GuardedRoute
+						path='/admin/customers/edit/:id'
+						exact
+						render={props => <UpdateCustomerForm {...props} />}
 					/>
 					<GuardedRoute
 						path='/admin/admins'

@@ -69,7 +69,7 @@ class AdminCustomersPage extends Component {
 										/>
 										<EditEntryButton
 											history={this.props.history}
-											redirectUrl={'/admin/admins/edit/' + value.id}
+											redirectUrl={'/admin/customers/edit/' + value.id}
 										/>
 									</td>
 								</tr>
